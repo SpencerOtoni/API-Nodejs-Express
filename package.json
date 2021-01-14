@@ -1,0 +1,8 @@
+{
+  "name": "Formacao-Nodejs-Express-Alura",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/SpencerOtoni/Formacao-Nodejs-Express-Alura.git",
+  "author": "Spencer <sspencerotoni@gmail.com>",
+  "license": "MIT"
+}
