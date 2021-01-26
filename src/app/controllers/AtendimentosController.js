@@ -33,7 +33,7 @@ class AtendimentosController {
   }
 }
 
-export default new AtendimentosController
+export default new AtendimentosController()
 
 
 

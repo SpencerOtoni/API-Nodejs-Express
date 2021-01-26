@@ -1,8 +1,14 @@
 import { resolve } from 'path'
 import fs from 'fs'
 
-const path = resolve(__dirname, '..', '..', 'tmp', 'uploads')
+const uploadDeArquivo = (caminho, nomeDoArquivo, callbackImagemCriada) => {
+    const path = resolve(__dirname, '..', '..', 'tmp', 'uploads')
 
-fs.createReadStream(`${path}/bg-intro.jpg`)
-    .pipe(fs.createWriteStream(`${path}/bg-intro2.jpg`))
-    .on('finish', () => console.log('Imagem foi escrita com sucesso'))
+    fs.createReadStream(caminho)
+    .pipe(fs.createWriteStream(`${path}/${nomeDoArquivo}`))
+    .on('finish', () => callbackImagemCriada(`${path}/${nomeDoArquivo}`))
+}
+
+
+export default uploadDeArquivo
+
