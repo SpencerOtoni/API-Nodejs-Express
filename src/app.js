@@ -1,11 +1,28 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import routes from './routes.js'
+import routes from './routes'
 
-const app = express()
+import './database'
 
-app.use(routes)
-app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+class App {
+    constructor(){
+        this.server = express()
 
-export default app
+        this.middlewares();
+        this.routes()
+    }
+
+    middlewares(){
+        this.server.use(express.json())
+        this.server.use(bodyParser.urlencoded({ extended: true }))      
+    }
+
+    routes(){
+        this.server.use(routes)
+    }
+}
+
+export default new App().server
+
+
+

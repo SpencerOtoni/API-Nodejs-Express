@@ -5,16 +5,18 @@
   "repository": "https://github.com/SpencerOtoni/Formacao-Nodejs-Express-Alura.git",
   "author": "Spencer <sspencerotoni@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "start": "nodemon src/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "consign": "^0.1.6",
-    "express": "^4.17.1"
+    "date-fns": "^2.16.1",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
   },
-  "devDependeices": {
-    "nodemon": "^2.0.7"
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "sucrase": "^3.17.0"
   }
 }
