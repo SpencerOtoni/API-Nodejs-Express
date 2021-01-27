@@ -10,6 +10,7 @@
     "img": "nodemon src/config/upload.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "consign": "^0.1.6",
     "date-fns": "^2.16.1",

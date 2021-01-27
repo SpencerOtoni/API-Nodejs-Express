@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns'
+import axios from 'axios'
 
 class Atendimento{
     init(conexao){
@@ -17,7 +18,7 @@ class Atendimento{
             if(erro) {
                 return res.status(400).json(erro)
             }
-
+            
             return res.status(200).json(atendimento)
         })
     }
@@ -25,12 +26,17 @@ class Atendimento{
     listAtendimento(id, res){
         const sql = `SELECT * FROM Atendimentos WHERE id=${Number(id)}`
       
-        this.conexao.query(sql, (erro, resultados) => {
+        this.conexao.query(sql, async (erro, resultados) => {
+            const atendimento = resultados[0]
+            const cpf = atendimento.cliente
             if(erro) {
                 return res.status(400).json(erro)
             }
 
-            return res.status(200).json(resultados[0])
+            const { data } = await axios.get(`http://localhost:8082/${cpf}`)
+            atendimento.cliente = data
+
+            return res.status(200).json(atendimento)
         })
 
     }
