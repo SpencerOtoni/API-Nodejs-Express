@@ -1,5 +1,5 @@
 import databaseConfig from '../config/database'
-import tabelaAtendimentos from '../app/infraestrutura/tabelas'
+import tabelaAtendimentos from './tabelas'
 import Atendimentos from '../app/models/atendimentos'
 import Pets from '../app/models/pets'
 

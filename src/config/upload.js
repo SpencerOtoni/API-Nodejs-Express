@@ -1,9 +1,9 @@
-import { resolve, path } from 'path'
+import { resolve, extname } from 'path'
 import fs from 'fs'
 
 const uploadDeArquivo = (caminho, nomeDoArquivo, callbackImagemCriada) => {
 
-    const tipo = path.extname(caminho)
+    const tipo = extname(caminho)
     const nomeComTipo = `${nomeDoArquivo}${tipo}`
 
     const path = resolve(__dirname, '..', '..', 'tmp', 'uploads')
