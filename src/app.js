@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import routes from './routes'
 
 import './database'
+import './database/tabelas'
 
 class App {
     constructor(){

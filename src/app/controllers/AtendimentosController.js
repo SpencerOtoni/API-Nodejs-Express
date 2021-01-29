@@ -5,7 +5,13 @@ class AtendimentosController {
   store(req, res){
     const atendimento = req.body
 
-    Atendimento.add(atendimento , res)
+    Atendimento.add(atendimento.then(
+      atendimentoCadastrado => {  
+        res.status(201).json(atendimentoCadastrado) 
+      }
+    )).catch(erro => {
+      res.status(400).json(erro)
+    })
   }
 
   index(req, res){

@@ -1,26 +1,26 @@
 import { format, parseISO } from 'date-fns'
 import axios from 'axios'
 
+import repositoryAtendimento from '../../repository/Atendimentos'
+
 class Atendimento{
-    init(conexao){
-        this.conexao = conexao
-    }
 
-
-    add(atendimento, res) {
+    add(atendimento) {
         const data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss')
         const dataCriacao = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
    
         const atendimentoModificado = {...atendimento, dataCriacao, data}
-        const sql = 'INSERT INTO Atendimentos SET ?'
 
+        return repositoryAtendimento.add(atendimentoModificado)
+        
+        /* const sql = 'INSERT INTO Atendimentos SET ?'
         this.conexao.query(sql, atendimentoModificado, (erro, resultados) => {
             if(erro) {
                 return res.status(400).json(erro)
             }
             
             return res.status(200).json(atendimento)
-        })
+        }) */
     }
 
     listAtendimento(id, res){

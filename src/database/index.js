@@ -1,18 +1,22 @@
 import databaseConfig from '../config/database'
-import tabelaAtendimentos from './tabelas'
-import Atendimentos from '../app/models/atendimentos'
-import Pets from '../app/models/pets'
 
-const models = [tabelaAtendimentos, Atendimentos, Pets]
-
-class Database{
+class Database {
     constructor(){
-        this.init()
+        this.connection = databaseConfig
     }
 
-    init(){
-        this.connection = databaseConfig
-        models.map((model) => { model.init(this.connection) })
+    query(query, parametros = ' ') {
+        return new Promise((resolve, reject) =>{
+            this.connection.query(query, parametros, (error, result)=>{
+                if(error){
+                    return reject(error)
+                }
+
+                return resolve(result)
+
+            })
+        })
+        
     }
 }
 
