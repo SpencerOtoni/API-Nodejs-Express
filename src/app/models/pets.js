@@ -1,4 +1,4 @@
-import uploadDeArquivo from '../../config/upload'
+import uploadDeArquivo from '../../app/infraestrutura/upload'
 
 class Pet {
     init(conexao){

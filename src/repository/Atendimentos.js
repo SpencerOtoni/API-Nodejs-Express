@@ -1,10 +1,9 @@
-import query from '../database'
+import database from '../database'
 
 class Atendimentos {
     add(atendimento){
         const sql = 'INSERT INTO Atendimentos SET ?'
-        
-        return query(sql, atendimento)
+        return database.executaQuery(sql, atendimento)
     }
 }
 

@@ -11,16 +11,10 @@ class Atendimento{
    
         const atendimentoModificado = {...atendimento, dataCriacao, data}
 
-        return repositoryAtendimento.add(atendimentoModificado)
-        
-        /* const sql = 'INSERT INTO Atendimentos SET ?'
-        this.conexao.query(sql, atendimentoModificado, (erro, resultados) => {
-            if(erro) {
-                return res.status(400).json(erro)
-            }
-            
-            return res.status(200).json(atendimento)
-        }) */
+        return repositoryAtendimento.add(atendimentoModificado).then((result)=>{
+            const id = result.insertId
+            return {...atendimentoModificado, id}
+        })
     }
 
     listAtendimento(id, res){

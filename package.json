@@ -6,8 +6,7 @@
   "author": "Spencer <sspencerotoni@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "img": "nodemon src/config/upload.js"
+    "start": "nodemon src/server.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

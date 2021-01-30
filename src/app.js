@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import routes from './routes'
 
 import './database'
-import './database/tabelas'
+import tabela from './database/tabelas'
 
 class App {
     constructor(){
@@ -11,6 +11,7 @@ class App {
 
         this.middlewares();
         this.routes()
+        tabela.init()
     }
 
     middlewares(){
