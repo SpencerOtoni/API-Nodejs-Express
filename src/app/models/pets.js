@@ -1,23 +1,18 @@
 import uploadDeArquivo from '../../app/infraestrutura/upload'
+import repositoryPets from '../../repository/Pets'
 
 class Pet {
-    init(conexao){
-        this.conexao = conexao
-    }
 
-    add(pet, res){
-        const sql = 'INSERT INTO Pets SET ?'
-
+    add(pet){
+        
         uploadDeArquivo(pet.imagem, pet.nome, (novoCaminho) => {
             
             const novoPet = {nome: pet.nome, imagem: novoCaminho}
 
-            this.conexao.query(sql, novoPet, (erro) =>{
-                if(erro){
-                   return res.status(400).json(erro)
-                }
-    
-                return res.status(200).json(novoPet)
+            return repositoryPets.add(novoPet)
+            .then((result)=>{
+                const id = result.insertId
+                return {...novoPet, id}
             })
         })  
     }
