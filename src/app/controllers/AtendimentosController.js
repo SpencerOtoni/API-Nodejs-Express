@@ -19,7 +19,13 @@ class AtendimentosController {
   index(req, res){
     const { id } = req.params
 
-    Atendimento.listAtendimento(id, res)
+    Atendimento.listAtendimento(id).then(
+      listAtendimento => {
+        res.status(200).json(listAtendimento) 
+      }
+    ).catch(erro => {
+      res.status(400).json(erro)
+    })
   }
 
   async show(req, res){

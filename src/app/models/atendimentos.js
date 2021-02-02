@@ -11,28 +11,24 @@ class Atendimento{
    
         const atendimentoModificado = {...atendimento, dataCriacao, data}
 
-        return repositoryAtendimento.add(atendimentoModificado).then((result)=>{
-            const id = result.insertId
-            return {...atendimentoModificado, id}
-        })
+        return repositoryAtendimento.add(atendimentoModificado)
+            .then((result)=>{
+                const id = result.insertId
+                return {...atendimentoModificado, id}
+            })
     }
 
-    listAtendimento(id, res){
-        const sql = `SELECT * FROM Atendimentos WHERE id=${Number(id)}`
-      
-        this.conexao.query(sql, async (erro, resultados) => {
-            const atendimento = resultados[0]
-            const cpf = atendimento.cliente
-            if(erro) {
-                return res.status(400).json(erro)
-            }
+    async listAtendimento(id){
+        
+        return repositoryAtendimento.listAtendimento(id).then( async(result)=>{
+            const atendimento = result[0]
+            const { cliente } = atendimento
 
-            const { data } = await axios.get(`http://localhost:8082/${cpf}`)
+            const { data } = await axios.get(`http://localhost:8082/${cliente}`)
             atendimento.cliente = data
-
-            return res.status(200).json(atendimento)
+   
+            return atendimento
         })
-
     }
 
     listAtendimentos(res){
