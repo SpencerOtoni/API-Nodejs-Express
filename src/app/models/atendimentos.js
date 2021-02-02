@@ -5,7 +5,7 @@ import repositoryAtendimento from '../../repository/Atendimentos'
 
 class Atendimento{
 
-    add(atendimento) {
+    async add(atendimento) {
         const data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss')
         const dataCriacao = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
    
@@ -20,57 +20,41 @@ class Atendimento{
 
     async listAtendimento(id){
         
-        return repositoryAtendimento.listAtendimento(id).then( async(result)=>{
-            const atendimento = result[0]
-            const { cliente } = atendimento
+        return repositoryAtendimento.listAtendimento(id)
+            .then( async(result)=>{
+                const atendimento = result[0]
+                const { cliente } = atendimento
 
-            const { data } = await axios.get(`http://localhost:8082/${cliente}`)
-            atendimento.cliente = data
-   
-            return atendimento
-        })
+                const { data } = await axios.get(`http://localhost:8082/${cliente}`)
+                atendimento.cliente = data
+    
+                return atendimento
+            })
     }
 
-    listAtendimentos(res){
-        const sql = 'SELECT * FROM Atendimentos'
-
-        this.conexao.query(sql, (erro, resultados) => {
-            if(erro) {
-                return res.status(400).json(erro)
-            }
-
-            return res.status(200).json(resultados)
-        })
+    async listAtendimentos(){
+        
+        return repositoryAtendimento.listAtendimentos()
     }
 
-    update(id, atendimento, res){
-        const sql = 'UPDATE Atendimentos set ? WHERE id=?'
+    async update(id, atendimento){
 
         if(atendimento.data){
             atendimento.data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss')
         }
 
-        this.conexao.query(sql, [atendimento, Number(id)], (erro, resultados) =>{
-            if(erro){
-                return res.status(400).json(erro)
-            }
-
-            return res.status(200).json({...atendimento ,id})
-        })
-
+        return repositoryAtendimento.update(atendimento, id)
+            .then((result)=>{
+                return {...atendimento ,id}
+            })
     }
 
-    delete(id, res){
-        const sql = `DELETE FROM Atendimentos WHERE id=${Number(id)}`
-
-        this.conexao.query(sql, (erro, resultados) =>{
-            if(erro){
-                return res.status(400).json(erro)
-            }
-
-            return res.status(200).json(id)
-        })
+    delete(id){
         
+        return repositoryAtendimento.delete(id)
+            .then((result)=> {
+                return {id}
+            })
     }
 }
 

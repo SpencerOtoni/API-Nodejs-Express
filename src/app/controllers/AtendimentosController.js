@@ -30,20 +30,38 @@ class AtendimentosController {
 
   async show(req, res){
 
-    Atendimento.listAtendimentos(res)
+    Atendimento.listAtendimentos().then(
+      listAtendimentos =>{
+        res.status(200).json(listAtendimentos) 
+      }
+    ).catch(erro => {
+      res.status(400).json(erro)
+    })
   }
 
   async update(req, res){
     const { id } = req.params
     const atendimento = req.body
 
-    Atendimento.update(id, atendimento, res)
+    Atendimento.update(id, atendimento).then(
+      updateAtendimento => {
+        res.status(200).json(updateAtendimento) 
+      }
+    ).catch(erro => {
+      res.status(400).json(erro)
+    })
   }
 
   async delete(req, res){
     const { id } = req.params
 
-    Atendimento.delete(id, res)
+    Atendimento.delete(id).then(
+      deleteAtendimento => {
+        res.status(200).json(id) 
+      }
+    ).catch(erro => {
+      res.status(400).json(erro)
+    })
   }
 }
 
