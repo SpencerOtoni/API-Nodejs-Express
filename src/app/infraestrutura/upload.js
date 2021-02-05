@@ -9,8 +9,8 @@ const uploadDeArquivo = (caminho, nomeDoArquivo, callbackImagemCriada) => {
     const path = resolve(__dirname, '..', '..', 'tmp', 'uploads')
 
     fs.createReadStream(caminho)
-    .pipe(fs.createWriteStream(`${path}/${nomeComTipo}`))
-    .on('finish', () => callbackImagemCriada(`${path}/${nomeComTipo}`))
+        .pipe(fs.createWriteStream(`${path}/${nomeComTipo}`))
+        .on('finish', () => callbackImagemCriada(`${path}/${nomeComTipo}`))
 }
 
 

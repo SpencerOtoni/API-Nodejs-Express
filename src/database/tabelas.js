@@ -2,9 +2,9 @@ import query from '../database'
 
 class Tabelas {
     init() {
-        this.criarAtendimento()
+        this.criarUser()
         this.criarPets()
-        console.log('tabela')
+        this.criarAtendimento()
     }
 
     criarUser(){

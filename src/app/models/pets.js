@@ -3,12 +3,12 @@ import repositoryPets from '../../repository/Pets'
 
 class Pet {
 
-    add(pet){
+    async add(pet){
         
-        uploadDeArquivo(pet.imagem, pet.nome, (novoCaminho) => {
+        await uploadDeArquivo(pet.imagem, pet.nome, async (novoCaminho) => {
             
-            const novoPet = {nome: pet.nome, imagem: novoCaminho}
-
+            const novoPet = await {nome: pet.nome, imagem: novoCaminho}
+            
             return repositoryPets.add(novoPet)
             .then((result)=>{
                 const id = result.insertId
