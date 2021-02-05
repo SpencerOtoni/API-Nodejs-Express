@@ -1,30 +1,27 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import routes from './routes'
+import express from "express";
+import bodyParser from "body-parser";
+import routes from "./routes";
 
-import './database'
-import tabela from './database/tabelas'
+import "./database";
+import tabela from "./database/tabelas";
 
 class App {
-    constructor(){
-        this.server = express()
+  constructor() {
+    this.server = express();
 
-        this.middlewares();
-        this.routes()
-        tabela.init()
-    }
+    this.middlewares();
+    this.routes();
+    tabela.init();
+  }
 
-    middlewares(){
-        this.server.use(express.json())
-        this.server.use(bodyParser.urlencoded({ extended: true }))      
-    }
+  middlewares() {
+    this.server.use(express.json());
+    this.server.use(bodyParser.urlencoded({ extended: true }));
+  }
 
-    routes(){
-        this.server.use(routes)
-    }
+  routes() {
+    this.server.use(routes);
+  }
 }
 
-export default new App().server
-
-
-
+export default new App().server;
