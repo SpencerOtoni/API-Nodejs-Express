@@ -9,7 +9,7 @@ class Tabelas {
 
   criarUser() {
     const sql =
-      "CREATE TABLE IF NOT EXISTS User(id int NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), nome varchar(50), senha varchar(20), email varchar(50))";
+      "CREATE TABLE IF NOT EXISTS User(id int NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), nome varchar(50), senha varchar(300), email varchar(50))";
 
     query
       .executaQuery(sql)

@@ -7,7 +7,7 @@ import repositorySession from "../../repository/Session";
 class Session {
   async add(user) {
     const { senha } = user;
-    const userResult = await repositorySession.add(user);
+    const userResult = await repositorySession.add(user)
 
     const id = userResult.insertId;
 

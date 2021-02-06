@@ -3,6 +3,7 @@ import { Router } from "express";
 import Atendimentos from "./app/controllers/AtendimentosController";
 import Pets from "./app/controllers/PetsController";
 import Users from "./app/controllers/UserController";
+import SessionController from "./app/controllers/SessionController";
 
 import authMiddleware from "./app/middlewares/auth";
 

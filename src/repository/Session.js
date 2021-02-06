@@ -2,9 +2,10 @@ import database from "../database";
 
 class Session {
   add(user) {
-    const { email, senha } = user;
-    const sql = `SELECT * FROM User WHERE email=${email} AND senha=${senha}`;
-    return database.executaQuery(sql, user);
+    const { email } = user;
+    console.log(email)
+    const sql = `SELECT * FROM User WHERE email='${email}'`;
+    return database.executaQuery(sql);
   }
 }
 
