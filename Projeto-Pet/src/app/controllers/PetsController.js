@@ -3,7 +3,6 @@ import Pets from '../models/pets';
 
 class PetsController {
   async store(req, res) {
-
     const schema = Yup.object().shape({
       nome: Yup.string().required(),
       imagem: Yup.string().required(),
@@ -12,7 +11,6 @@ class PetsController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'validation fails.' });
     }
-
 
     const pet = req.body;
 

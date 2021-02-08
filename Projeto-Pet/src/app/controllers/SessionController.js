@@ -1,4 +1,4 @@
-import Session from "../models/session";
+import Session from '../models/session';
 
 class SessionController {
   store(req, res) {

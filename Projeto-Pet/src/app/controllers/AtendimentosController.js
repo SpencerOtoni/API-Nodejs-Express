@@ -1,15 +1,13 @@
 import * as Yup from 'yup';
-import Atendimento from "../models/atendimentos";
+import Atendimento from '../models/atendimentos';
 
 class AtendimentosController {
   async store(req, res) {
-
     const schema = Yup.object().shape({
       cliente: Yup.string().required(),
       pet: Yup.string().required(),
       servico: Yup.string().required(),
       data: Yup.date().required(),
-      dataCriacao: Yup.date().required(),
       status: Yup.string().required(),
       observacoes: Yup.string().required(),
     });
