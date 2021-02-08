@@ -1,7 +1,23 @@
+import * as Yup from 'yup';
 import Atendimento from "../models/atendimentos";
 
 class AtendimentosController {
-  store(req, res) {
+  async store(req, res) {
+
+    const schema = Yup.object().shape({
+      cliente: Yup.string().required(),
+      pet: Yup.string().required(),
+      servico: Yup.string().required(),
+      data: Yup.date().required(),
+      dataCriacao: Yup.date().required(),
+      status: Yup.string().required(),
+      observacoes: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'validation fails.' });
+    }
+
     const atendimento = req.body;
 
     Atendimento.add(atendimento)
