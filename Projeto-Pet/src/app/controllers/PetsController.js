@@ -1,4 +1,4 @@
-import Pets from "../models/pets";
+import Pets from '../models/pets';
 
 class PetsController {
   store(req, res) {

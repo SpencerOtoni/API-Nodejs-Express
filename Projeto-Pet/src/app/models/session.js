@@ -1,13 +1,13 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
-import authConfig from "../../config/auth";
-import repositorySession from "../../repository/Session";
+import authConfig from '../../config/auth';
+import repositorySession from '../../repository/Session';
 
 class Session {
   async add(user) {
     const { senha } = user;
-    const userResult = await repositorySession.add(user)
+    const userResult = await repositorySession.add(user);
 
     const id = userResult.insertId;
 
@@ -22,7 +22,7 @@ class Session {
       };
     }
 
-    return userResult;
+    return { error: 'Password does not match.' };
   }
 }
 

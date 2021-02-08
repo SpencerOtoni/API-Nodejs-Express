@@ -1,9 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
-import routes from "./routes";
+import express from 'express';
+import bodyParser from 'body-parser';
+import routes from './routes';
 
-import "./database";
-import tabela from "./database/tabelas";
+import './database';
+import tabela from './database/tabelas';
 
 class App {
   constructor() {

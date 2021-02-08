@@ -1,8 +1,8 @@
-import database from "../database";
+import database from '../database';
 
 class Atendimentos {
   add(atendimento) {
-    const sql = "INSERT INTO Atendimentos SET ?";
+    const sql = 'INSERT INTO Atendimentos SET ?';
     return database.executaQuery(sql, atendimento);
   }
 
@@ -12,12 +12,12 @@ class Atendimentos {
   }
 
   listAtendimentos() {
-    const sql = "SELECT * FROM Atendimentos";
+    const sql = 'SELECT * FROM Atendimentos';
     return database.executaQuery(sql);
   }
 
   update(atendimento, id) {
-    const sql = "UPDATE Atendimentos set ? WHERE id=?";
+    const sql = 'UPDATE Atendimentos set ? WHERE id=?';
     return database.executaQuery(sql, [atendimento, Number(id)]);
   }
 

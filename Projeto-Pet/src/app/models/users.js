@@ -1,5 +1,5 @@
-import bcrypt from "bcryptjs";
-import repositoryUser from "../../repository/User";
+import bcrypt from 'bcryptjs';
+import repositoryUser from '../../repository/User';
 
 class User {
   async add(user) {

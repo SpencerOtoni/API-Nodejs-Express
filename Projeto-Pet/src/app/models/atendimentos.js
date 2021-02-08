@@ -1,12 +1,12 @@
-import { format, parseISO } from "date-fns";
-import axios from "axios";
+import { format, parseISO } from 'date-fns';
+import axios from 'axios';
 
-import repositoryAtendimento from "../../repository/Atendimentos";
+import repositoryAtendimento from '../../repository/Atendimentos';
 
 class Atendimento {
   async add(atendimento) {
-    const data = format(parseISO(atendimento.data), "yyyy-MM-dd HH:mm:ss");
-    const dataCriacao = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+    const data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss');
+    const dataCriacao = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
     const atendimentoModificado = { ...atendimento, dataCriacao, data };
 
@@ -36,7 +36,7 @@ class Atendimento {
     if (atendimento.data) {
       atendimento.data = format(
         parseISO(atendimento.data),
-        "yyyy-MM-dd HH:mm:ss"
+        'yyyy-MM-dd HH:mm:ss'
       );
     }
 
