@@ -5,7 +5,7 @@ class PetsController {
   async store(req, res) {
     const schema = Yup.object().shape({
       nome: Yup.string().required(),
-      imagem: Yup.string().required(),
+      file: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {

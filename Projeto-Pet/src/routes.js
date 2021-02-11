@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 import Atendimentos from './app/controllers/AtendimentosController';
 import Pets from './app/controllers/PetsController';
@@ -8,6 +10,7 @@ import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.post('/users', Users.store);
 routes.post('/session', SessionController.store);
@@ -20,6 +23,6 @@ routes.get('/atendimentos', Atendimentos.show);
 routes.patch('/atendimentos/:id', Atendimentos.update);
 routes.delete('/atendimentos/:id', Atendimentos.delete);
 
-routes.post('/pet', Pets.store);
+routes.post('/pet', upload.single('file'), Pets.store);
 
 export default routes;
