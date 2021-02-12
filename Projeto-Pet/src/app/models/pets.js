@@ -15,6 +15,10 @@ class Pet {
       const novoPet = await { ...pet, imagem: novoCaminho };
     }); */
   }
+
+  async listPets(id) {
+    return repositoryPets.listPets(id);
+  }
 }
 
 export default new Pet();

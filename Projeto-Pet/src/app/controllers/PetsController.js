@@ -21,6 +21,18 @@ class PetsController {
         res.status(400).json(erro);
       });
   }
+
+  index(req, res) {
+    const { id } = req.userId;
+
+    Pets.listPets(id)
+      .then((listPets) => {
+        res.status(200).json(listPets);
+      })
+      .catch((erro) => {
+        res.status(400).json(erro);
+      });
+  }
 }
 
 export default new PetsController();

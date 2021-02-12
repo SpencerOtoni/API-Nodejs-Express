@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isBefore, subHours } from 'date-fns';
 import axios from 'axios';
 
 import repositoryAtendimento from '../../repository/Atendimentos';
@@ -7,6 +7,10 @@ class Atendimento {
   async add(atendimento) {
     const data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss');
     const dataCriacao = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
+    if (isBefore(data, new Date())) {
+      return { error: 'Past dates are not permitted.' };
+    }
 
     const atendimentoModificado = { ...atendimento, dataCriacao, data };
 
@@ -38,15 +42,23 @@ class Atendimento {
         parseISO(atendimento.data),
         'yyyy-MM-dd HH:mm:ss'
       );
+
+      const dateWinthSub = subHours(atendimento.date, 2);
+
+      if (isBefore(dateWinthSub, new Date())) {
+        return {
+          error: 'You can only cancel appointments 2 hours in advance.',
+        };
+      }
     }
 
     return repositoryAtendimento
       .update(atendimento, id)
-      .then((result) => ({ ...atendimento, id }));
+      .then(() => ({ ...atendimento, id }));
   }
 
-  delete(id) {
-    return repositoryAtendimento.delete(id).then((result) => ({ id }));
+  async delete(id) {
+    return repositoryAtendimento.delete(id).then(() => ({ id }));
   }
 }
 
