@@ -1,6 +1,10 @@
 import Sequelize from 'sequelize';
 
+import Fornecedor from '../app/models/Fornecesor'
+
 import databaseConfig from '../config/database';
+
+const models = [Fornecedor];
 
 class Database {
   constructor() {
