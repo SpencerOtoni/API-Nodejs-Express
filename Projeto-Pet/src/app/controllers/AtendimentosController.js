@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import * as Yup from 'yup';
 import Atendimento from '../models/atendimentos';
 

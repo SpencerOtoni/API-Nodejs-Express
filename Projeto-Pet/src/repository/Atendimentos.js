@@ -7,7 +7,9 @@ class Atendimentos {
   }
 
   listAtendimento(id) {
-    const sql = `SELECT * FROM Atendimentos WHERE id=${Number(id)}`;
+    const sql = `SELECT Atendimentos.cliente, Atendimentos.servico, Atendimentos.data, Atendimentos.status, Atendimentos.observacoes, pets.nome as NomePet FROM Atendimentos INNER JOIN Pets ON Atendimentos.idPet = Pets.id where Atendimentos.idPet = ${Number(
+      id
+    )}`;
     return database.executaQuery(sql);
   }
 

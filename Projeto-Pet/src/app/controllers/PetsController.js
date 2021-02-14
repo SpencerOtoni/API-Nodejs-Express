@@ -11,7 +11,8 @@ class PetsController {
       return res.status(400).json({ error: 'validation fails.' });
     }
 
-    const pet = { ...req.body, imagem: req.file };
+    const idUser = req.userId;
+    const pet = { ...req.body, idUser, imagem: req.file };
 
     Pets.add(pet)
       .then((petCadastrado) => {
@@ -23,8 +24,8 @@ class PetsController {
   }
 
   index(req, res) {
-    const { id } = req.userId;
-
+    const id = req.userId;
+  
     Pets.listPets(id)
       .then((listPets) => {
         res.status(200).json(listPets);
