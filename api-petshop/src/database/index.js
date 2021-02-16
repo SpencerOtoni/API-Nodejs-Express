@@ -1,10 +1,8 @@
-import Sequelize from 'sequelize';
-
-import Fornecedor from '../app/models/Fornecesor'
-
 import databaseConfig from '../config/database';
 
-const models = [Fornecedor];
+import tabelaFornecedor from '../app/models/Fornecedor';
+
+const models = [tabelaFornecedor];
 
 class Database {
   constructor() {
@@ -12,7 +10,7 @@ class Database {
   }
 
   init() {
-    this.connection = new Sequelize(databaseConfig);
+    this.connection = databaseConfig;
 
     models
       .map((model) => model.init(this.connection))

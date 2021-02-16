@@ -2,7 +2,6 @@ import 'dotenv/config';
 
 import express from 'express';
 import { resolve } from 'path';
-//import bodyParser from 'body-parser';
 
 import * as Sentry from '@sentry/node';
 import 'express-async-errors';
@@ -31,7 +30,7 @@ class App {
   middlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(express.json());
-    //this.server.use(bodyParser.urlencoded({ extended: true }));
+    // this.server.use(bodyParser.urlencoded({ extended: true }));
     this.server.use(
       '/pet',
       express.static(resolve(__dirname, '..', 'tmp', 'uploads'))

@@ -4,4 +4,6 @@ import FornecedorController from './app/Controllers/FornecedorController'
 
 const routes = new Router()
 
-routes.post('/fornecedores', FornecedorController.store)
+routes.post('/fornecedores', FornecedorController.store);
+
+export default routes;
