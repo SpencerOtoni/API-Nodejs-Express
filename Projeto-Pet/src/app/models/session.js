@@ -9,7 +9,7 @@ class Session {
     const { senha } = user;
     const userResult = await repositorySession.add(user);
 
-    const id = userResult.insertId;
+    const { id } = userResult[0];
 
     const checkPassword = await bcrypt.compare(senha, userResult[0].senha);
 

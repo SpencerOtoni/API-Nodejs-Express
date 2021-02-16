@@ -8,7 +8,7 @@ class Atendimento {
     const data = format(parseISO(atendimento.data), 'yyyy-MM-dd HH:mm:ss');
     const dataCriacao = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-    if (isBefore(data, new Date())) {
+    if (isBefore(parseISO(data), new Date())) {
       return { error: 'Past dates are not permitted.' };
     }
 
@@ -22,7 +22,7 @@ class Atendimento {
 
   async listAtendimento(id) {
     return repositoryAtendimento.listAtendimento(id).then(async (result) => {
-      const atendimento = result[0];
+      const atendimento = result;
       const { cliente } = atendimento;
 
       const { data } = await axios.get(`http://localhost:8082/${cliente}`);

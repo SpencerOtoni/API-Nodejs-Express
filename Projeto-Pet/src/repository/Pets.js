@@ -8,7 +8,7 @@ class Pets {
 
   listPets(id) {
     const sql =
-      'SELECT Pets.nome, Pets.imagem FROM User JOIN Pets ON Pets.idUser = ?';
+      'SELECT Pets.nome, Pets.imagem, user.nome as tutor FROM Pets INNER JOIN user ON Pets.idUser = user.id where Pets.idUser = ?';
     return database.executaQuery(sql, Number(id));
   }
 }

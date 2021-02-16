@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import multerConfig from './config/multer';
+import Brute from 'express-brute';
 
 import Atendimentos from './app/controllers/AtendimentosController';
 import Pets from './app/controllers/PetsController';
@@ -11,9 +12,11 @@ import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+const store = new Brute.MemoryStore();
+const bruteforce = new Brute(store);
 
 routes.post('/users', Users.store);
-routes.post('/session', SessionController.store);
+routes.post('/session', bruteforce.prevent, SessionController.store);
 
 routes.use(authMiddleware);
 
@@ -24,5 +27,6 @@ routes.patch('/atendimentos/:id', Atendimentos.update);
 routes.delete('/atendimentos/:id', Atendimentos.delete);
 
 routes.post('/pet', upload.single('file'), Pets.store);
+routes.get('/pet', Pets.index);
 
 export default routes;
