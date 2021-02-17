@@ -40,11 +40,6 @@ class App {
     this.server.use(helmet());
     this.server.use(cors());
     this.server.use(express.json());
-<<<<<<< HEAD
-    // this.server.use(bodyParser.urlencoded({ extended: true }));
-=======
-
->>>>>>> 4ce9c8129b9581c23459ab4e31118a954adcccf4
     this.server.use(
       '/pet',
       express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
