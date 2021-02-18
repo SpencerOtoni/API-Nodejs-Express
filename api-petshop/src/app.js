@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import express from 'express';
-
+import fornecedor from './app/models/Fornecedor'
 import routes from './routes'
 
 import './database';
@@ -12,6 +12,7 @@ class App {
   
       this.middlewares();
       this.routes();
+      this.createTable()
     }
   
     middlewares() {
@@ -19,6 +20,12 @@ class App {
   
     routes() {
       this.server.use(routes)
+    }
+
+    createTable(){
+      fornecedor.teste().sync()
+      .then(() => console.log('Tabela criada com sucesso'))
+      .catch(console.log)
     }
 
   }
