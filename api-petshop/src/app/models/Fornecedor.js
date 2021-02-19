@@ -1,14 +1,7 @@
 import Sequelize from 'sequelize';
+import database from '../../config/database'
 
-class TabelaFornecedor {
-  
-  static init(sequelize) {
-    this.sequelize = sequelize
-   
-  } 
-
-  static teste(){
-    const fornecedor = this.sequelize.define('fornecedor', 
+const fornecedor = database.define('fornecedor', 
   {
     empresa : {
       type : Sequelize.STRING,
@@ -31,11 +24,7 @@ class TabelaFornecedor {
     updatedAt: 'dataAtualizacao',
     version: 'versao'
   }
-  )
+)
 
-  return fornecedor;
-}
 
-}
-
-export default TabelaFornecedor;
+export default fornecedor;

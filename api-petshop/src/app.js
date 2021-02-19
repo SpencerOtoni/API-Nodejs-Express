@@ -4,7 +4,6 @@ import express from 'express';
 import fornecedor from './app/models/Fornecedor'
 import routes from './routes'
 
-import './database';
 
 class App {
     constructor() {
@@ -23,7 +22,7 @@ class App {
     }
 
     createTable(){
-      fornecedor.teste().sync()
+      fornecedor.sync()
       .then(() => console.log('Tabela criada com sucesso'))
       .catch(console.log)
     }
