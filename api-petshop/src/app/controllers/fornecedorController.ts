@@ -1,8 +1,9 @@
+import { Request, Response } from 'express'
 import * as Yup from 'yup';
 import Fornecedor from '../models/Fornecedor'
 
 class FornecedorController {
-    async store(req, res){
+    async store(req: Request, res: Response){
         const schema = Yup.object().shape({
             empresa: Yup.string().required(),
             email: Yup.string().email().required(),
@@ -28,8 +29,8 @@ class FornecedorController {
         })
     }
 
-    async show(req, res){
-        const empresas = await Fornecedor.findAll()
+    async show(req: Request, res: Response){
+        const companies = await Fornecedor.findAll()
 
         if(companies.length === 0){
             return res.status(401).json({
@@ -37,10 +38,10 @@ class FornecedorController {
             })
         }
 
-        return res.json(empresas)
+        return res.json(companies)
     }
 
-    async index(req, res){
+    async index(req: Request, res: Response){
         const { id } = req.params
         const  company = await Fornecedor.findOne({
             where: {
@@ -55,19 +56,19 @@ class FornecedorController {
         return res.json(company)
     }
     
-    async update(req, res){
+    async update(req: Request, res: Response){
         const { id } = req.params;
-        const  resultados = await Fornecedor.findByIdAndUpdate(
+       /* const  resultados = await Fornecedor.afterBulkUpdate(
             id,
             {
                 
             }
-        )
+        )*/
 
-        return res.json(resultados)
+        //return res.json(resultados)
     }
 
-    async delete(req, res){
+    async delete(req: Request, res: Response){
         const { id } = req.params;
 
         const company = await Fornecedor.findByPk(id)
@@ -82,4 +83,4 @@ class FornecedorController {
     }
 }
 
-export default new FornecedorController()
+export { FornecedorController }

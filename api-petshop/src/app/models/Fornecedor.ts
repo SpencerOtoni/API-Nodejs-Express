@@ -1,7 +1,17 @@
-import Sequelize from 'sequelize';
-import database from '../../config/database'
+import Sequelize, { Model } from 'sequelize';
 
-const fornecedor = database.define('fornecedor', 
+import database from '../../database'
+
+class Fornecedor extends Model {
+  
+  public empresa!: string;
+  public email!: string;
+  public categoria!: string;
+
+
+}
+
+Fornecedor.init(
   {
     empresa : {
       type : Sequelize.STRING,
@@ -17,14 +27,13 @@ const fornecedor = database.define('fornecedor',
     }
   },
   {
+    sequelize: database,
     freezeTableName: true,
     tableName: 'fornecedores',
-    timestamps: true,
-    createdAt: 'dataCriacao',
-    updatedAt: 'dataAtualizacao',
     version: 'versao'
   }
 )
 
+export default Fornecedor;
 
-export default fornecedor;
+
