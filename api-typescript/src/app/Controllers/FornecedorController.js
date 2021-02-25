@@ -8,7 +8,7 @@ class FornecedorController {
             email: Yup.string().email().required(),
             categoria: Yup.string().required(),
           });
-      
+
         if (!(await schema.isValid(req.body))) {
         return res.status(400).json({ error: 'Validation fails.' });
         }
@@ -16,7 +16,7 @@ class FornecedorController {
         const userCompany = await Fornecedor.findOne({ where: { email: req.body.email } });
 
         if (userCompany) {
-        return res.status(400).json({ error: 'Company already exists.' });
+        return res.status(404).json({ error: 'Company already exists.' });
         }
 
         const  {empresa, email, categoria} = await Fornecedor.create(req.body)
@@ -29,15 +29,15 @@ class FornecedorController {
     }
 
     async show(req, res){
-        const empresas = await Fornecedor.findAll()
+        const companies = await Fornecedor.findAll()
 
         if(companies.length === 0){
-            return res.status(401).json({
+            return res.status(404).json({
                 error: 'Companies not found.'
             })
         }
 
-        return res.json(empresas)
+        return res.json(companies)
     }
 
     async index(req, res){
@@ -49,18 +49,18 @@ class FornecedorController {
         })
 
         if(!company){
-            return res.status(401).json({ error: 'Company not found.' });
+            return res.status(404).json({ error: 'Company not found.' });
         }
 
         return res.json(company)
     }
-    
+
     async update(req, res){
         const { id } = req.params;
         const  resultados = await Fornecedor.findByIdAndUpdate(
             id,
             {
-                
+
             }
         )
 
@@ -73,7 +73,7 @@ class FornecedorController {
         const company = await Fornecedor.findByPk(id)
 
         if(!company){
-            return res.status(401).json({ error: 'Company not found.' });
+            return res.status(404).json({ error: 'Company not found.' });
         }
 
         company.destroy();
