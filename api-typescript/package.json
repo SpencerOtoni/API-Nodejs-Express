@@ -12,15 +12,23 @@
     "yup": "^0.32.9"
   },
   "scripts": {
+<<<<<<< HEAD:api-typescript/package.json
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts"
+=======
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts ",
+    "start": "nodemon src/server.js"
+>>>>>>> 8eb61a66c179a45b919b6e09ec7434b9c56474c8:api-petshop/package.json
   },
   "devDependencies": {
+    "@types/express": "^4.17.11",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
+<<<<<<< HEAD:api-typescript/package.json
     "sucrase": "^3.17.1",
+=======
+>>>>>>> 8eb61a66c179a45b919b6e09ec7434b9c56474c8:api-petshop/package.json
     "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.5"
   }

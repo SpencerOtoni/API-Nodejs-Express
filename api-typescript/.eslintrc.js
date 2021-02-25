@@ -3,8 +3,14 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["airbnb-base", "prettier"],
-  plugins: ["prettier"],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'airbnb-base',
+    'prettier',
+    'prettier/@typescript-eslint',
+],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint',"prettier"],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
@@ -13,8 +19,31 @@ module.exports = {
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
     "no-param-reassign": "off",
-    camelcase: [2, { properties: "never" }],
+    camelcase: 'off',
     "no-unused-vars": ["error", { argsIgnorePattern: "next" }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+      },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
 
