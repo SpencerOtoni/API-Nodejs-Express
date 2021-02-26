@@ -2,8 +2,11 @@ import 'dotenv/config';
 import express from 'express';
 
 import fornecedor from './app/models/Fornecedor'
+import user from './app/models/User'
+
 import routes from './routes'
 
+const models = [fornecedor, user];
 
 class App {
 
@@ -26,9 +29,11 @@ class App {
   }
 
   createTable(): void {
-    fornecedor.sync()
-    .then(() => console.log('Tabela criada com sucesso'))
-    .catch(console.log)
+    models.map((model)=> {
+      model.sync()
+      .then(() => console.log('Tabela criada com sucesso'))
+      .catch(console.log)
+    })
   }
 
 }

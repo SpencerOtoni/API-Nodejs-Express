@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Sequelize from 'sequelize';
 
 const instancia = new Sequelize.Sequelize(
