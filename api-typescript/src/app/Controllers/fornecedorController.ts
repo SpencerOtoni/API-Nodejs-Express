@@ -44,7 +44,7 @@ class FornecedorController {
 
     async index(req: Request, res: Response){
         const { id } = req.params
-        const  company = await Fornecedor.findOne({
+        const company = await Fornecedor.findOne({
             where: {
                 id
             }
@@ -58,15 +58,21 @@ class FornecedorController {
     }
     
     async update(req: Request, res: Response){
-        const { id } = req.params;
-       /* const  resultados = await Fornecedor.afterBulkUpdate(
-            id,
-            {
-                
-            }
-        )*/
 
-        //return res.json(resultados)
+        const { id } = req.params;
+
+        const company = await Fornecedor.findByPk(id)
+
+        if(!company){
+            return res.status(401).json({ error: 'Company not found.' });
+        }
+
+        const { empresa, categoria} = await company.update(req.body)
+
+        return res.json({
+            empresa,
+            categoria
+        })
     }
 
     async delete(req: Request, res: Response){
