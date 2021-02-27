@@ -21,7 +21,7 @@ class FornecedorController {
         return res.status(400).json({ error: 'Company already exists.' });
         }
 
-        const  {empresa, email, categoria} = await Fornecedor.create(req.body)
+        const  { empresa, email, categoria } = await Fornecedor.create(req.body)
 
         return res.json({
             empresa,

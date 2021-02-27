@@ -8,7 +8,7 @@ class User extends Model {
     public name!: string;
     public email!: string;
     public password!: string;
-    public passwordHash!: string;
+    public password_hash!: string;
     public readonly createAt: Date;
     public readonly updateAt: Date;
 
@@ -19,10 +19,10 @@ class User extends Model {
 
 User.init(
     {
-    name: Sequelize.STRING,
-    email: Sequelize.STRING,
-    password: Sequelize.VIRTUAL,
-    passwordHash: Sequelize.STRING
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
     },
     {
         sequelize: database,
@@ -30,13 +30,13 @@ User.init(
     }
 )
 
-User.addHook(
+ User.addHook(
     'beforeSave',
     async (user: User): Promise<void> => {
         if(user.password) {
-            user.passwordHash = await bcrypt.hash(user.passwordHash, 8)
+            user.password_hash = await bcrypt.hash(user.password, 8)
         }
     }
-)
+) 
 
 export default User
