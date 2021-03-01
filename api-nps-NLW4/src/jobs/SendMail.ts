@@ -7,7 +7,7 @@ class SendMail{
     }
 
     async handle({ data }) {
-        const { email, title, name, description, id } = data
+        const { email, title, name, description, link, id } = data
 
         await SendMailService.sendMail({
             to: `${email}`,
@@ -17,7 +17,7 @@ class SendMail{
                 name,
                 title,
                 description,
-                link: process.env.URL_MAIL,
+                link,
                 id,
             }
         })

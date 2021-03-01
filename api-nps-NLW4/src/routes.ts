@@ -19,10 +19,10 @@ router.post("/users", userController.create)
 router.post("/surveys", surveysController.create)
 router.get("/surveys", surveysController.show)
 
-router.post("/sendMail", sendMailController.execute)
+router.post("/sendMail", sendMailController.create)
 
-router.get("/answers/:value", answerController.execute)
+router.get("/answers/:value", answerController.create)
 
-router.get("/nps/:id", npsController.execute)
+router.get("/nps/:id", npsController.create)
 
 export { router }
