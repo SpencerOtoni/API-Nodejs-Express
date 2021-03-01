@@ -7,23 +7,16 @@ class Fornecedor extends Model {
   public empresa!: string;
   public email!: string;
   public categoria!: string;
+  public readonly createAt: Date;
+  public readonly updateAt: Date;
 
 }
 
 Fornecedor.init(
   {
-    empresa : {
-      type : Sequelize.STRING,
-      allowNull : false
-    },
-    email : {
-      type : Sequelize.STRING,
-        allowNull : false
-    },
-    categoria : {
-        type : Sequelize.ENUM('ração', 'brinquedos'),
-        allowNull : false
-    }
+    empresa : Sequelize.STRING,
+    email : Sequelize.STRING,
+    categoria : Sequelize.ENUM('ração', 'brinquedos'),
   },
   {
     sequelize: database,

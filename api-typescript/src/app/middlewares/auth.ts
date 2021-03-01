@@ -4,6 +4,7 @@ import { promisify } from 'util'
 
 import authConfig from '../../config/auth'
 
+
 export default async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization
 
@@ -15,9 +16,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const [, token] = authHeader.split(' ')
 
     try {
-        const decoded = await promisify(jwt.verify)(token, authConfig.secret)
+        const decoded = jwt.verify(token, authConfig.secret);
 
-        req.userId = decoded.id
+        console.log(decoded.id)
 
         return next()
     } catch (error) {

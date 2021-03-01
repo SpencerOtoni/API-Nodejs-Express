@@ -11,10 +11,6 @@ class User extends Model {
     public password_hash!: string;
     public readonly createAt: Date;
     public readonly updateAt: Date;
-
-    public async checkPassword(password: string): Promise<boolean> {
-        return bcrypt.compare(password, this.password)
-    }
 }
 
 User.init(
@@ -26,7 +22,8 @@ User.init(
     },
     {
         sequelize: database,
-        freezeTableName: true
+        freezeTableName: true,
+        version: 'versao'
     }
 )
 
