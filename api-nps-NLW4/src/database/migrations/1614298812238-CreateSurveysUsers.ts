@@ -10,7 +10,9 @@ export class CreateSurveysUsers1614298812238 implements MigrationInterface {
                     {
                         name: "id",
                         type: "uuid",
-                        isPrimary: true
+                        isPrimary: true,
+                        generationStrategy: 'uuid',
+                        default: 'uuid_generate_v4()',
                     },
                     {
                         name: "user_id",
@@ -27,6 +29,11 @@ export class CreateSurveysUsers1614298812238 implements MigrationInterface {
                     },
                     {
                         name: "created_at",
+                        type: "timestamp",
+                        default: "now()"
+                    },
+                    {
+                        name: "updated_at",
                         type: "timestamp",
                         default: "now()"
                     }

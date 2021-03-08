@@ -20,18 +20,12 @@ class SendMailController{
 
         if(!user){
             throw new AppError("User does not exist");
-            /* return res.status(400).json({
-                error: "User does not exist"
-            }) */
         }
 
         const survey = await surveysRepository.findOne({id: survey_id})
 
         if(!survey){
-            throw new AppError("User does not exist");
-           /*  return res.status(400).json({
-                error: "User does not exist"
-            }) */
+            throw new AppError("Survey does not exist");
         }
 
         const surveyUserAlreadyExist = await surveysUsersRepository.findOne({

@@ -1,3 +1,17 @@
+interface IMailConfig {
+    host: string;
+    port: number;
+    secure: boolean;
+    auth: {
+        user: string;
+        pass: string;
+    };
+    default: {
+      from: string;
+    };
+  }
+
+
 export default {
     host: "smtp.mailtrap.io",
     port: 2525,
@@ -9,4 +23,4 @@ export default {
   default: {
       from: 'Equipe NPS <noreply@nps.com>'
   }
-}
+} as IMailConfig

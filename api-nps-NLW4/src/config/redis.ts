@@ -1,4 +1,10 @@
+interface ICacheConfig {
+  host: string;
+  port: number
+}
+
+
 export default {
     host: process.env.REDIS_HOST,
-    port: process.env.REDIS_POST,
-  };
+    port: Number(process.env.REDIS_POST),
+  } as ICacheConfig
