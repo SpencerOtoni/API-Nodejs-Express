@@ -1,10 +1,13 @@
 import Sequelize from 'sequelize'
 
 import User from '../app/models/User'
+import Form from '../app/models/Form'
+import Question from '../app/models/Question'
+import Answer from '../app/models/Answer'
 
 import databaseConfig from '../config/database'
 
-const models = [User]
+const models = [User, Form, Question, Answer]
 
 class Database {
     constructor() {

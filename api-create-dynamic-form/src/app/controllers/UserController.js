@@ -26,7 +26,7 @@ class UserController {
         const userExists = await User.findOne({ where: { email } })
 
         if (userExists) {
-            throw new AppError('User already exist.', 401)
+            throw new AppError('User already exist.')
         }
 
         const { id, name } = await User.create(req.body)
