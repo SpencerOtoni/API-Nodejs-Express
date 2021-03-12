@@ -8,6 +8,8 @@ class Question extends Model {
             },
             {
                 sequelize,
+                freezeTableName: true,
+                tableName: 'questions',
             }
         )
 
@@ -15,7 +17,7 @@ class Question extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Form, { foreignKey: 'form_id', as: 'form' })
+        this.hasMany(models.Form, { foreignKey: 'id', as: 'form' })
     }
 }
 
