@@ -17,7 +17,11 @@ class Question extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.Form, { foreignKey: 'id', as: 'form' })
+        this.belongsTo(models.Form, { foreignKey: 'form_id', as: 'form' }),
+            this.hasMany(models.Answer, {
+                foreignKey: 'question_id',
+                as: 'questions',
+            })
     }
 }
 

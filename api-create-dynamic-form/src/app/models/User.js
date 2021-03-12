@@ -23,6 +23,10 @@ class User extends Model {
 
         return this
     }
+
+    static associate(models) {
+        this.hasMany(models.Form, { foreignKey: 'user_id', as: 'form' })
+    }
 }
 
 export default User

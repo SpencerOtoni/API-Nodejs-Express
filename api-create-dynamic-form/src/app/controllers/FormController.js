@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 import Form from '../models/Form'
-// import Question from '../models/Question'
+import Question from '../models/Question'
 
 // import AppError from '../errors/AppError'
 
@@ -26,15 +26,51 @@ class FormController {
             // throw new AppError('User already exist.')
         }
 
-        const data = { ...req.body, user_id: Number(req.userId) }
+        const { id } = await Form.create({
+            title,
+            user_id: Number(req.userId),
+        })
 
-        const form = await Form.create(data)
+        const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+
+        /* const { data } = req.body
+
+        if (data.length > 0) {
+            return res.json({ error: 'Inserir perguntas!' })
+            // throw new AppError('User already exist.')
+        } */
+
+        const data = [
+            { question: 'Pergunta 01' },
+            { question: 'Pergunta 02' },
+            { question: 'Pergunta 03' },
+        ]
+
+        const questionAddFomr_id = data.map((element) => {
+            element.question
+        })
+
+        const question = await Question.bulkCreate(questionAddFomr_id, {
+            returning: true,
+        })
 
         return res.json({
-            data,
-            form,
+            formAndUserInclude,
+            question,
         })
     }
 }
 
 export default new FormController()
+
+/*
+{"title":"Formulário 01",
+ "data": [{"question":"Pergunta 01"},{"question":"Pergunta 02"},{"question":"Pergunta 03"}]
+}
+*/
+
+/* const fabricante = await Fabricante.findByPk(resultadoCreate.id, {include: Produto});
+//console.log(fabricante);
+const produtos = await fabricante.getProdutos();
+console.log(produtos);
+*/

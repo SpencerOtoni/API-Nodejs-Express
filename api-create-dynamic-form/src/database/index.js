@@ -7,7 +7,7 @@ import Answer from '../app/models/Answer'
 
 import databaseConfig from '../config/database'
 
-const models = [User, Form /* , Question, Answer */]
+const models = [User, Form, Question, Answer]
 
 class Database {
     constructor() {
