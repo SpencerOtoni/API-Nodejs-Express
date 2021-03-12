@@ -5,10 +5,11 @@ class Form extends Model {
         super.init(
             {
                 title: Sequelize.STRING,
-                created_at: Sequelize.DATE,
             },
             {
                 sequelize,
+                freezeTableName: true,
+                tableName: 'form',
             }
         )
 
@@ -16,7 +17,7 @@ class Form extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
+        this.hasMany(models.User, { foreignKey: 'id', as: 'user' })
     }
 }
 

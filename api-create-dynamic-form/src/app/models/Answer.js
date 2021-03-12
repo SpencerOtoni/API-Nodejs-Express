@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize'
 
-class Question extends Model {
+class Answer extends Model {
     static init(sequelize) {
         super.init(
             {
@@ -8,6 +8,8 @@ class Question extends Model {
             },
             {
                 sequelize,
+                freezeTableName: true,
+                tableName: 'answer',
             }
         )
 
@@ -15,11 +17,11 @@ class Question extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Question, {
-            foreignKey: 'question_id',
+        this.hasMany(models.Question, {
+            foreignKey: 'id',
             as: 'question',
         })
     }
 }
 
-export default Question
+export default Answer
