@@ -20,7 +20,7 @@ class Question extends Model {
         this.belongsTo(models.Form, { foreignKey: 'form_id', as: 'form' }),
             this.hasMany(models.Answer, {
                 foreignKey: 'question_id',
-                as: 'questions',
+                as: 'answer',
             })
     }
 }

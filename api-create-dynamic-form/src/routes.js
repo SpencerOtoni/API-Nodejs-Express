@@ -13,6 +13,8 @@ routes.post('/session', SessionController.store)
 
 routes.use(authMiddleware)
 routes.post('/form', FormController.store)
+routes.get('/form', FormController.show)
+routes.get('/form/:id', FormController.index)
 
 routes.get('/token', (req, res) => {
     res.json({ id: req.userId })

@@ -1,21 +1,23 @@
 import * as Yup from 'yup'
 import Form from '../models/Form'
 import Question from '../models/Question'
+import User from '../models/User'
 
 // import AppError from '../errors/AppError'
 
 class FormController {
     async store(req, res) {
         const { title } = req.body
+        const { data } = req.body
 
         const schema = Yup.object().shape({
-            title: Yup.string().required('Titulo é obrigatório!'),
+            title: Yup.string().required('Title is mandatory!'),
         })
 
         try {
             await schema.validate(req.body, { abortEarly: false })
         } catch (err) {
-            return res.json({ error: 'Titulo é obrigatório!' })
+            return res.json({ error: 'Title is mandatory!' })
             // throw new AppError(err)
         }
 
@@ -26,37 +28,52 @@ class FormController {
             // throw new AppError('User already exist.')
         }
 
+        if (data.length === 0) {
+            return res.json({
+                error:
+                    'To save the form, it is necessary to insert a question.',
+            })
+            // throw new AppError('User already exist.')
+        }
+
         const { id } = await Form.create({
             title,
             user_id: Number(req.userId),
         })
 
-        const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+        const questionAddFomrId = data.map((element) => ({
+            ...element,
+            form_id: Number(id),
+        }))
 
-        /* const { data } = req.body
-
-        if (data.length > 0) {
-            return res.json({ error: 'Inserir perguntas!' })
-            // throw new AppError('User already exist.')
-        } */
-
-        const data = [
-            { question: 'Pergunta 01' },
-            { question: 'Pergunta 02' },
-            { question: 'Pergunta 03' },
-        ]
-
-        const questionAddFomr_id = data.map((element) => {
-            element.question
-        })
-
-        const question = await Question.bulkCreate(questionAddFomr_id, {
+        const question = await Question.bulkCreate(questionAddFomrId, {
             returning: true,
         })
 
         return res.json({
+            id,
+            // question,
+        })
+    }
+
+    async show(req, res) {
+        const userAndForm = await User.findByPk(req.userId, { include: 'form' })
+
+        return res.json({
+            userAndForm,
+        })
+    }
+
+    async index(req, res) {
+        const { id } = req.params
+        const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+        const questionForm = await Form.findByPk(id, {
+            include: 'question',
+        })
+
+        return res.json({
             formAndUserInclude,
-            question,
+            questionForm,
         })
     }
 }
