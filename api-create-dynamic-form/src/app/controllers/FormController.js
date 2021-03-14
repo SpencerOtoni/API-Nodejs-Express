@@ -52,12 +52,23 @@ class FormController {
 
         return res.json({
             id,
+            title,
             // question,
         })
     }
 
     async show(req, res) {
-        const userAndForm = await User.findByPk(req.userId, { include: 'form' })
+        const userAndForm = await User.findByPk(req.userId, {
+            order: ['createdAt'],
+            attributes: ['id', 'name'],
+            include: [
+                {
+                    model: Form,
+                    as: 'form',
+                    attributes: ['id', 'title', 'createdAt'],
+                },
+            ],
+        })
 
         return res.json({
             userAndForm,
@@ -66,13 +77,20 @@ class FormController {
 
     async index(req, res) {
         const { id } = req.params
-        const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+        // const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
         const questionForm = await Form.findByPk(id, {
-            include: 'question',
+            attributes: ['id', 'title'],
+            include: [
+                {
+                    model: Question,
+                    as: 'question',
+                    attributes: ['id', 'question'],
+                },
+            ],
         })
 
         return res.json({
-            formAndUserInclude,
+            // formAndUserInclude,
             questionForm,
         })
     }
@@ -84,10 +102,4 @@ export default new FormController()
 {"title":"Formulário 01",
  "data": [{"question":"Pergunta 01"},{"question":"Pergunta 02"},{"question":"Pergunta 03"}]
 }
-*/
-
-/* const fabricante = await Fabricante.findByPk(resultadoCreate.id, {include: Produto});
-//console.log(fabricante);
-const produtos = await fabricante.getProdutos();
-console.log(produtos);
 */
