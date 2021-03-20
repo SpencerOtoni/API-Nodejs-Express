@@ -2,16 +2,16 @@ import Form from '../models/Form'
 import Question from '../models/Question'
 import Answer from '../models/Answer'
 
+import AppError from '../errors/AppError'
+
 class AnswerController {
     async store(req, res) {
         const { data } = req.body
 
         if (data.length === 0) {
-            return res.json({
-                error:
-                    'To save the form, it is necessary to insert a question.',
-            })
-            // throw new AppError('User already exist.')
+            throw new AppError(
+                'To save the form, it is necessary to insert a question.'
+            )
         }
 
         /* const answerAddQuestionId = data.map((element) => ({

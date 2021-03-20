@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import AppError from './app/errors/AppError'
 
 import UserController from './app/controllers/UserController'
 import SessionController from './app/controllers/SessionController'

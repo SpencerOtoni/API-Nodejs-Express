@@ -4,7 +4,7 @@ import User from '../models/User'
 import AppError from '../errors/AppError'
 
 class UserController {
-    async store(req, res, next) {
+    async store(req, res) {
         const { email } = req.body
 
         const schema = Yup.object().shape({
