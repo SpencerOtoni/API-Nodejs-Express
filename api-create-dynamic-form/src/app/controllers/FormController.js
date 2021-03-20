@@ -7,11 +7,11 @@ import AppError from '../errors/AppError'
 
 class FormController {
     async store(req, res) {
-        const { title } = req.body
-        const { data } = req.body
+        const { title, data } = req.body,
 
         const schema = Yup.object().shape({
             title: Yup.string().required('Title is mandatory!'),
+            data: Yup.array(),
         })
 
         try {
@@ -66,6 +66,10 @@ class FormController {
             ],
         })
 
+        if (!userAndForm) {
+            throw new AppError('There are no registered forms.')
+        }
+
         return res.json({
             userAndForm,
         })
@@ -73,9 +77,9 @@ class FormController {
 
     async index(req, res) {
         const { id } = req.params
-        // const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+
         const questionForm = await Form.findByPk(id, {
-            attributes: ['id', 'title'],
+            attributes: ['id', 'user_id', 'title'],
             include: [
                 {
                     model: Question,
@@ -85,8 +89,11 @@ class FormController {
             ],
         })
 
+        if (questionForm.user_id !== req.userId) {
+            throw new AppError('You do not have permission to access this form.', 401)
+        }
+
         return res.json({
-            // formAndUserInclude,
             questionForm,
         })
     }

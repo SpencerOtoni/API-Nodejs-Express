@@ -30,13 +30,13 @@ class SessionController {
         const user = await User.findOne({ where: { email } })
 
         if (!user) {
-            throw new AppError('User not found.')
+            throw new AppError('User not found.', 401)
         }
 
         const checkPassword = await bcrypt.compare(password, user.password_hash)
 
         if (!checkPassword) {
-            throw new AppError('Password does not match.')
+            throw new AppError('Password does not match.', 401)
         }
 
         const { id, name } = user

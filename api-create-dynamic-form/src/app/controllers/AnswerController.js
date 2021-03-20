@@ -10,7 +10,17 @@ class AnswerController {
 
         if (data.length === 0) {
             throw new AppError(
-                'To save the form, it is necessary to insert a question.'
+                'To save the form, it is necessary to insert the answers'
+            )
+        }
+
+        const verifyQuestion_id = data.every((element) => {
+            element[question_id] = 'question_id'
+        })
+
+        if (!verifyQuestion_id) {
+            throw new AppError(
+                'The question_id attribute is not present in all objects'
             )
         }
 
@@ -30,7 +40,7 @@ class AnswerController {
 
     async index(req, res) {
         const { id } = req.params
-        // const formAndUserInclude = await Form.findByPk(id, { include: 'user' })
+
         const questionForm = await Form.findByPk(id, {
             attributes: ['id', 'title'],
             include: [
@@ -50,7 +60,6 @@ class AnswerController {
         })
 
         return res.json({
-            // formAndUserInclude,
             questionForm,
         })
     }
