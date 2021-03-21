@@ -1,3 +1,4 @@
+import * as Yup from 'yup'
 import Form from '../models/Form'
 import Question from '../models/Question'
 import Answer from '../models/Answer'
@@ -8,19 +9,19 @@ class AnswerController {
     async store(req, res) {
         const { data } = req.body
 
+        const schema = Yup.object().shape({
+            data: Yup.array(),
+        })
+
+        try {
+            await schema.validate(req.body, { abortEarly: false })
+        } catch (err) {
+            throw new AppError(err)
+        }
+
         if (data.length === 0) {
             throw new AppError(
                 'To save the form, it is necessary to insert the answers'
-            )
-        }
-
-        const verifyQuestion_id = data.every((element) => {
-            element[question_id] = 'question_id'
-        })
-
-        if (!verifyQuestion_id) {
-            throw new AppError(
-                'The question_id attribute is not present in all objects'
             )
         }
 
@@ -42,7 +43,7 @@ class AnswerController {
         const { id } = req.params
 
         const questionForm = await Form.findByPk(id, {
-            attributes: ['id', 'title'],
+            attributes: ['id', 'user_id', 'title'],
             include: [
                 {
                     model: Question,
@@ -58,6 +59,21 @@ class AnswerController {
                 },
             ],
         })
+
+        if (questionForm.user_id !== req.userId) {
+            throw new AppError(
+                'You do not have permission to access this form.',
+                401
+            )
+        }
+
+        const { question } = questionForm
+
+        const ExistAnswer = question.some(({ answer }) => answer.length > 0)
+
+        if (!ExistAnswer) {
+            throw new AppError('There are no registered answer.')
+        }
 
         return res.json({
             questionForm,

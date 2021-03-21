@@ -31,7 +31,7 @@ class UserController {
 
         const { id, name } = await User.create(req.body)
 
-        return res.json({
+        return res.status(201).json({
             id,
             name,
         })

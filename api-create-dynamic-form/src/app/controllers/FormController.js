@@ -7,7 +7,7 @@ import AppError from '../errors/AppError'
 
 class FormController {
     async store(req, res) {
-        const { title, data } = req.body,
+        const { title, data } = req.body
 
         const schema = Yup.object().shape({
             title: Yup.string().required('Title is mandatory!'),
@@ -20,16 +20,18 @@ class FormController {
             throw new AppError(err)
         }
 
-        const formExists = await Form.findOne({ where: { title } })
-
-        if (formExists) {
-            throw new AppError('Form already exist.')
-        }
-
         if (data.length === 0) {
             throw new AppError(
                 'To save the form, it is necessary to insert a question.'
             )
+        }
+
+        const formExists = await Form.findOne({
+            where: { title, user_id: req.userId },
+        })
+
+        if (formExists) {
+            throw new AppError('Form already exist.')
         }
 
         const { id } = await Form.create({
@@ -46,7 +48,7 @@ class FormController {
             returning: true,
         })
 
-        return res.json({
+        return res.status(201).json({
             id,
             title,
             // question,
@@ -66,7 +68,9 @@ class FormController {
             ],
         })
 
-        if (!userAndForm) {
+        const { form } = userAndForm
+
+        if (form.length === 0) {
             throw new AppError('There are no registered forms.')
         }
 
@@ -90,7 +94,14 @@ class FormController {
         })
 
         if (questionForm.user_id !== req.userId) {
-            throw new AppError('You do not have permission to access this form.', 401)
+            throw new AppError(
+                'You do not have permission to access this form.',
+                401
+            )
+        }
+
+        if (!questionForm) {
+            throw new AppError('Forms does not exist')
         }
 
         return res.json({

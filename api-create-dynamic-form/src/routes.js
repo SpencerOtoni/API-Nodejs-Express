@@ -13,7 +13,7 @@ routes.post('/user', UserController.store)
 
 routes.post('/session', SessionController.store)
 
-routes.get('/answer/:id', AnswerController.index)
+routes.post('/answer', AnswerController.store)
 
 routes.use(authMiddleware)
 
@@ -21,6 +21,6 @@ routes.post('/form', FormController.store)
 routes.get('/form', FormController.show)
 routes.get('/form/:id', FormController.index)
 
-routes.post('/answer', AnswerController.store)
+routes.get('/answer/:id', AnswerController.index)
 
 export default routes
