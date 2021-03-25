@@ -1,84 +1,88 @@
 import Weather from '../models/Weather'
+import Pokemons from '../models/Pokemons'
+
+import AppError from '../errors/AppError'
 
 class WeatherController {
-  async index(req, res) {
-    const { id } = req.params
+    async store(req, res) {
+        const weather = [
+            { name: 'Cloudy' },
+            { name: 'Fog' },
+            { name: 'Partly cloudy' },
+            { name: 'Rainy' },
+            { name: 'Snow' },
+            { name: 'Sunny/clear' },
+            { name: 'Windy' },
+        ]
 
-    const types = await Weather.findByPk(id, {
-      order: ['name'],
-      attributes: ['id', 'name'],
-      include: [
-        {
-          model: Pokemons,
-          as: 'type1',
-          attributes: [
-            'name',
-            'generation',
-            'legendary',
-            'stat_total',
-            'atk',
-            'def',
-            'sta',
-            'cp39',
-            'cp40',
-          ],
-        },
-      ],
-    })
-
-    if (!types) {
-      throw new AppError('Type not found')
+        const resultWeather = await Weather.bulkCreate(weather, {
+            returning: true,
+        })
+        return res.status(201).json({
+            resultWeather,
+        })
     }
 
-    return res.json(types)
-  }
+    async show(req, res) {
+        const { id } = req.params
 
-  async show(req, res) {
-    const types = await Types.findAll({
-      order: ['name'],
-      attributes: ['id', 'name'],
-      include: [
-        {
-          model: Pokemons,
-          as: 'type1',
-          attributes: [
-            'name',
-            'generation',
-            'legendary',
-            'stat_total',
-            'atk',
-            'def',
-            'sta',
-            'cp39',
-            'cp40',
-          ],
-        },
-      ],
-    })
+        const weather = await Weather.findByPk(id, {
+            order: ['name'],
+            attributes: ['id', 'name'],
+            include: [
+                {
+                    model: Pokemons,
+                    as: 'weather1',
+                    attributes: [
+                        'name',
+                        'generation',
+                        'legendary',
+                        'stat_total',
+                        'atk',
+                        'def',
+                        'sta',
+                        'cp39',
+                        'cp40',
+                    ],
+                },
+            ],
+        })
 
-    /* const { form } = userAndForm
+        if (!weather) {
+            throw new AppError('Weather not found')
+        }
 
-      if (form.length === 0) {
-        throw new AppError('There are no registered forms.')
-      } */
-
-    return res.json({
-      types,
-    })
-  }
-
-  async update(req, res) {
-    const { id } = req.params
-
-    const weather = await Weather.findByPk(id)
-    if (!weather) {
-      return res.status(400).json({ error: 'Weather not found' })
+        return res.json(weather)
     }
 
-    const update = await weather.update(req.body)
+    async index(req, res) {
+        const weather = await Weather.findAll({
+            order: ['name'],
+            attributes: ['id', 'name'],
+        })
 
-    return res.json(update)
-  }
+        if (weather.length === 0) {
+            throw new AppError('There are no weather forms.')
+        }
+
+        return res.json({
+            weather,
+        })
+    }
+
+    async update(req, res) {
+        const { id } = req.params
+
+        const weather = await Weather.findByPk(id)
+
+        if (!weather) {
+            throw new AppError('Weather not found.')
+        }
+
+        const newWeather = await weather.update(req.body)
+
+        return res.json(newWeather)
+    }
 }
 
 export default new WeatherController()

@@ -1,86 +1,100 @@
 import Types from '../models/Types'
+import Pokemons from '../models/Pokemons'
 
 import AppError from '../errors/AppError'
 
 class TypesController {
-  async index(req, res) {
-    const { id } = req.params
+    async store(req, res) {
+        const types = [
+            { name: 'bug' },
+            { name: 'dark' },
+            { name: 'dragon' },
+            { name: 'electric' },
+            { name: 'fairy' },
+            { name: 'fighting' },
+            { name: 'fire' },
+            { name: 'flying' },
+            { name: 'ghost' },
+            { name: 'grass' },
+            { name: 'ground' },
+            { name: 'ice' },
+            { name: 'normal' },
+            { name: 'poison' },
+            { name: 'psychic' },
+            { name: 'rock' },
+            { name: 'steel' },
+            { name: 'water' },
+        ]
 
-    const types = await Types.findByPk(id, {
-      order: ['name'],
-      attributes: ['id', 'name'],
-      include: [
-        {
-          model: Pokemons,
-          as: 'type1',
-          attributes: [
-            'name',
-            'generation',
-            'legendary',
-            'stat_total',
-            'atk',
-            'def',
-            'sta',
-            'cp39',
-            'cp40',
-          ],
-        },
-      ],
-    })
+        const resultTypes = await Types.bulkCreate(types, {
+            returning: true,
+        })
 
-    if (!types) {
-      throw new AppError('Type not found')
+        return res.status(201).json({
+            resultTypes,
+        })
     }
 
-    return res.json(types)
-  }
+    async show(req, res) {
+        const { id } = req.params
 
-  async show(req, res) {
-    const types = await Types.findAll({
-      order: ['name'],
-      attributes: ['id', 'name'],
-      include: [
-        {
-          model: Pokemons,
-          as: 'type1',
-          attributes: [
-            'name',
-            'generation',
-            'legendary',
-            'stat_total',
-            'atk',
-            'def',
-            'sta',
-            'cp39',
-            'cp40',
-          ],
-        },
-      ],
-    })
+        const types = await Types.findByPk(id, {
+            order: ['name'],
+            attributes: ['id', 'name'],
+            include: [
+                {
+                    model: Pokemons,
+                    as: 'type1',
+                    attributes: [
+                        'name',
+                        'generation',
+                        'legendary',
+                        'stat_total',
+                        'atk',
+                        'def',
+                        'sta',
+                        'cp39',
+                        'cp40',
+                    ],
+                },
+            ],
+        })
 
-    /* const { form } = userAndForm
+        if (!types) {
+            throw new AppError('Type not found.')
+        }
 
-    if (form.length === 0) {
-      throw new AppError('There are no registered forms.')
-    } */
-
-    return res.json({
-      types,
-    })
-  }
-
-  async update(req, res) {
-    const { id } = req.params
-
-    const type = await Weather.findByPk(id)
-    if (!type) {
-      return res.status(400).json({ error: 'Weather not found' })
+        return res.json(types)
     }
 
-    const update = await type.update(req.body)
+    async index(req, res) {
+        const types = await Types.findAll({
+            order: ['name'],
+            attributes: ['id', 'name'],
+        })
 
-    return res.json(update)
-  }
+        if (types.length === 0) {
+            throw new AppError('There are no types forms.')
+        }
+
+        return res.json({
+            types,
+        })
+    }
+
+    async update(req, res) {
+        const { id } = req.params
+
+        const type = await Types.findByPk(id)
+
+        if (!type) {
+            throw new AppError('Type not found.')
+        }
+
+        const newType = await type.update(req.body)
+
+        return res.json(newType)
+    }
 }
 
 export default new TypesController()
