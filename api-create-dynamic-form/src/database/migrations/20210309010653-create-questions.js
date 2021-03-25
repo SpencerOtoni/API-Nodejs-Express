@@ -11,6 +11,11 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            mandatory: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
+            },
             form_id: {
                 type: Sequelize.INTEGER,
                 references: { model: 'form', key: 'id' },

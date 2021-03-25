@@ -5,6 +5,7 @@ class Question extends Model {
         super.init(
             {
                 question: Sequelize.STRING,
+                mandatory: Sequelize.BOOLEAN,
             },
             {
                 sequelize,

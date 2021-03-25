@@ -1,10 +1,12 @@
 import Sequelize, { Model } from 'sequelize'
+import bcrypt from 'bcryptjs'
 
 class Form extends Model {
     static init(sequelize) {
         super.init(
             {
                 title: Sequelize.STRING,
+                token: Sequelize.UUID,
             },
             {
                 sequelize,
@@ -13,6 +15,10 @@ class Form extends Model {
             }
         )
 
+        /* this.addHook('beforeSave', async (form) => {
+            form.token = await bcrypt.hash(Math.round(Date.now() / 1000), 8)
+        })
+ */
         return this
     }
 

@@ -11,6 +11,11 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            token: {
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.literal('uuid_generate_v4()'),
+                allowNull: false,
+            },
             user_id: {
                 type: Sequelize.INTEGER,
                 references: { model: 'users', key: 'id' },

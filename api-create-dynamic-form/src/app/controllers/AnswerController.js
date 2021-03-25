@@ -69,9 +69,9 @@ class AnswerController {
 
         const { question } = questionForm
 
-        const ExistAnswer = question.some(({ answer }) => answer.length > 0)
+        const existAnswer = question.some(({ answer }) => answer.length > 0)
 
-        if (!ExistAnswer) {
+        if (!existAnswer) {
             throw new AppError('There are no registered answer.')
         }
 
