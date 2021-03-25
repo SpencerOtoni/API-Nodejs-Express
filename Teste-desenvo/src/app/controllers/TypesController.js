@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 import Types from '../models/Types'
 import Pokemons from '../models/Pokemons'
 
@@ -5,6 +7,19 @@ import AppError from '../errors/AppError'
 
 class TypesController {
     async store(req, res) {
+
+        const schema = Yup.object().shape({
+            name: Yup.string().required('Name required field!'),
+          })
+
+        try {
+        await schema.validate(req.body, { abortEarly: false })
+        } catch (err) {
+        throw new AppError(err)
+        }
+
+        const resultTypes = await Types.create(req.body)
+
         const types = [
             { name: 'bug' },
             { name: 'dark' },

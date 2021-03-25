@@ -219,17 +219,17 @@ class PokemonsController {
     }
 
     async delete(req, res) {
-        const { id } = req.body
+        const { id } = req.params
 
-        const pokemonExist = await Pokemons.findOne({ where: { id } })
+        const pokemon = await Pokemons.findByPk(id)
 
-        if (!pokemonExist) {
-            return res.status(401).json({ error: 'Pokemon does not exist' })
+        if (!pokemon) {
+            throw new AppError('Pokémon does not exist!')
         }
 
-        const pokemon = await pokemonExist.update({ status: 'deleted' })
+        const { name } = await pokemonExist.update({ active: false })
 
-        return res.json({ msg: 'Deletado com sucesso' })
+        return res.json({ msg: `The Pokémon ${name} successfully deleted!` })
     }
 }
 

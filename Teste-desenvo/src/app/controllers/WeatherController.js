@@ -5,6 +5,19 @@ import AppError from '../errors/AppError'
 
 class WeatherController {
     async store(req, res) {
+
+        const schema = Yup.object().shape({
+            name: Yup.string().required('Name required field!'),
+          })
+
+        try {
+        await schema.validate(req.body, { abortEarly: false })
+        } catch (err) {
+        throw new AppError(err)
+        }
+
+        const resultWeather = await Weather.create(req.body)
+
         const weather = [
             { name: 'Cloudy' },
             { name: 'Fog' },
@@ -18,6 +31,7 @@ class WeatherController {
         const resultWeather = await Weather.bulkCreate(weather, {
             returning: true,
         })
+
         return res.status(201).json({
             resultWeather,
         })
