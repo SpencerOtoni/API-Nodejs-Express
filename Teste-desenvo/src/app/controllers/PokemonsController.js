@@ -169,22 +169,22 @@ class PokemonsController {
                 {
                     model: Types,
                     as: 'type1',
-                    attributes: ['name'],
+                    attributes: ['id', 'name'],
                 },
                 {
                     model: Types,
                     as: 'type2',
-                    attributes: ['name'],
+                    attributes: ['id', 'name'],
                 },
                 {
                     model: Weather,
                     as: 'weather1',
-                    attributes: ['name'],
+                    attributes: ['id', 'name'],
                 },
                 {
                     model: Weather,
                     as: 'weather2',
-                    attributes: ['name'],
+                    attributes: ['id', 'name'],
                 },
             ],
         })
