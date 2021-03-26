@@ -8,229 +8,214 @@ import Weather from '../models/Weather'
 import AppError from '../errors/AppError'
 
 class PokemonsController {
-    async store(req, res) {
-        const {
-            name,
-            pokedex_number,
-            generation,
-            evolution,
-            family_id,
-            type_1,
-            type_2,
-            weather_1,
-            weather_2,
-            stat_total,
-            atk,
-            def,
-            sta,
-            legendary,
-            cp39,
-            cp40,
-        } = req.body
+  async store(req, res) {
+    const {
+      name,
+      pokedex_number,
+      generation,
+      evolution,
+      family_id,
+      type_1,
+      type_2,
+      weather_1,
+      weather_2,
+      stat_total,
+      atk,
+      def,
+      sta,
+      legendary,
+      cp39,
+      cp40,
+    } = req.body
 
-        const schema = Yup.object().shape({
-            name: Yup.string().required('Name required field!'),
-            type_1: Yup.number()
-                .required('Type required field!')
-                .positive()
-                .integer(),
-            weather_1: Yup.number()
-                .required('Weather required field!')
-                .positive()
-                .integer(),
-            atk: Yup.number()
-                .required('ATK required field!')
-                .positive()
-                .integer(),
-            def: Yup.number()
-                .required('DEF required field!')
-                .positive()
-                .integer(),
-            sta: Yup.number()
-                .required('STA required field!')
-                .positive()
-                .integer(),
-            cp39: Yup.number()
-                .required('CP39 required field!')
-                .positive()
-                .integer(),
-            cp40: Yup.number()
-                .required('CP40 Required field!')
-                .positive()
-                .integer(),
-        })
+    const schema = Yup.object().shape({
+      name: Yup.string().required('Name required field!'),
+      type_1: Yup.number()
+        .required('Type required field!')
+        .positive()
+        .integer(),
+      weather_1: Yup.number()
+        .required('Weather required field!')
+        .positive()
+        .integer(),
+      atk: Yup.number().required('ATK required field!').positive().integer(),
+      def: Yup.number().required('DEF required field!').positive().integer(),
+      sta: Yup.number().required('STA required field!').positive().integer(),
+      cp39: Yup.number().required('CP39 required field!').positive().integer(),
+      cp40: Yup.number().required('CP40 Required field!').positive().integer(),
+    })
 
-        try {
-            await schema.validate(req.body, { abortEarly: false })
-        } catch (err) {
-            throw new AppError(err)
-        }
-
-        const pokemonExists = await Pokemons.findOne({
-            where: { name },
-        })
-
-        if (pokemonExists) {
-            throw new AppError('Pokémon already registered!')
-        }
-
-        const pokemons = await Pokemons.create({
-            name,
-            pokedex_number,
-            generation,
-            evolution,
-            family_id,
-            type_1,
-            type_2,
-            weather_1,
-            weather_2,
-            stat_total,
-            atk,
-            def,
-            sta,
-            legendary,
-            cp39,
-            cp40,
-        })
-
-        return res.status(201).json({ pokemons })
+    try {
+      await schema.validate(req.body, { abortEarly: false })
+    } catch (err) {
+      throw new AppError(err)
     }
 
-    async index(req, res) {
-        const { page = 1 } = req.query
-        const { ativo } = req.body
-        const filter = ativo === undefined ? true : ativo
+    const pokemonExists = await Pokemons.findOne({
+      where: { name },
+    })
 
-        const pokemon = await Pokemons.findAll({
-            where: { active: filter },
-            order: ['name'],
-            attributes: [
-                'id',
-                'name',
-                'family_id',
-                'legendary',
-                'stat_total',
-                'atk',
-                'def',
-                'sta',
-                'cp39',
-                'cp40',
-            ],
-            limit: 20,
-            offset: (page - 1) * 20,
-            include: [
-                {
-                    model: Types,
-                    as: 'type1',
-                    attributes: ['name'],
-                },
-                {
-                    model: Types,
-                    as: 'type2',
-                    attributes: ['name'],
-                },
-                {
-                    model: Weather,
-                    as: 'weather1',
-                    attributes: ['name'],
-                },
-                {
-                    model: Weather,
-                    as: 'weather2',
-                    attributes: ['name'],
-                },
-            ],
-        })
-
-        if (pokemon.length === 0) {
-            throw new AppError('Not the registered pokémon!')
-        }
-
-        return res.json(pokemon)
+    if (pokemonExists) {
+      throw new AppError('Pokémon already registered!')
     }
 
-    async show(req, res) {
-        const { id } = req.params
+    const pokemons = await Pokemons.create({
+      name,
+      pokedex_number,
+      generation,
+      evolution,
+      family_id,
+      type_1,
+      type_2,
+      weather_1,
+      weather_2,
+      stat_total,
+      atk,
+      def,
+      sta,
+      legendary,
+      cp39,
+      cp40,
+    })
 
-        const pokemon = await Pokemons.findByPk(id, {
-            attributes: [
-                'id',
-                'name',
-                'family_id',
-                'legendary',
-                'stat_total',
-                'atk',
-                'def',
-                'sta',
-                'cp39',
-                'cp40',
-            ],
-            include: [
-                {
-                    model: Types,
-                    as: 'type1',
-                    attributes: ['name'],
-                },
-                {
-                    model: Types,
-                    as: 'type2',
-                    attributes: ['name'],
-                },
-                {
-                    model: Weather,
-                    as: 'weather1',
-                    attributes: ['name'],
-                },
-                {
-                    model: Weather,
-                    as: 'weather2',
-                    attributes: ['name'],
-                },
-            ],
-        })
+    return res.status(201).json({ pokemons })
+  }
 
-        if (!pokemon) {
-            throw new AppError('Pokémon not found!')
-        }
+  async index(req, res) {
+    const { page = 1 } = req.query
+    const { ativo } = req.body
+    const filter = ativo === undefined ? true : ativo
 
-        return res.json(pokemon)
+    const pokemon = await Pokemons.findAll({
+      where: { active: filter },
+      order: ['name'],
+      attributes: [
+        'id',
+        'name',
+        'family_id',
+        'legendary',
+        'stat_total',
+        'atk',
+        'def',
+        'sta',
+        'cp39',
+        'cp40',
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: Types,
+          as: 'type1',
+          attributes: ['name'],
+        },
+        {
+          model: Types,
+          as: 'type2',
+          attributes: ['name'],
+        },
+        {
+          model: Weather,
+          as: 'weather1',
+          attributes: ['name'],
+        },
+        {
+          model: Weather,
+          as: 'weather2',
+          attributes: ['name'],
+        },
+      ],
+    })
+
+    if (pokemon.length === 0) {
+      throw new AppError('Not the registered pokémon!')
     }
 
-    async update(req, res) {
-        const { id } = req.params
+    return res.json(pokemon)
+  }
 
-        const pokemon = await Pokemons.findByPk(id)
+  async show(req, res) {
+    const { id } = req.params
 
-        if (!pokemon) {
-            throw new AppError('Pokémon does not exist!')
-        }
+    const pokemon = await Pokemons.findByPk(id, {
+      attributes: [
+        'id',
+        'name',
+        'family_id',
+        'legendary',
+        'stat_total',
+        'atk',
+        'def',
+        'sta',
+        'cp39',
+        'cp40',
+      ],
+      include: [
+        {
+          model: Types,
+          as: 'type1',
+          attributes: ['name'],
+        },
+        {
+          model: Types,
+          as: 'type2',
+          attributes: ['name'],
+        },
+        {
+          model: Weather,
+          as: 'weather1',
+          attributes: ['name'],
+        },
+        {
+          model: Weather,
+          as: 'weather2',
+          attributes: ['name'],
+        },
+      ],
+    })
 
-        const namePokemonExists = await Pokemons.findOne({
-            where: { name: pokemon.name, id: { [Op.ne]: pokemon.id } },
-        })
-
-        if (namePokemonExists) {
-            throw new AppError('Pokémon name already registered!')
-        }
-
-        const { name } = await pokemon.update(req.body)
-
-        return res.json({ name })
+    if (!pokemon) {
+      throw new AppError('Pokémon not found!')
     }
 
-    async delete(req, res) {
-        const { id } = req.params
+    return res.json(pokemon)
+  }
 
-        const pokemon = await Pokemons.findByPk(id)
+  async update(req, res) {
+    const { id } = req.params
 
-        if (!pokemon) {
-            throw new AppError('Pokémon does not exist!')
-        }
+    const pokemon = await Pokemons.findByPk(id)
 
-        const { name } = await pokemonExist.update({ active: false })
-
-        return res.json({ msg: `The Pokémon ${name} successfully deleted!` })
+    if (!pokemon) {
+      throw new AppError('Pokémon does not exist!')
     }
+
+    const namePokemonExists = await Pokemons.findOne({
+      where: { name: pokemon.name, id: { [Op.ne]: pokemon.id } },
+    })
+
+    if (namePokemonExists) {
+      throw new AppError('Pokémon name already registered!')
+    }
+
+    const { name } = await pokemon.update(req.body)
+
+    return res.json({ name })
+  }
+
+  async delete(req, res) {
+    const { id } = req.params
+
+    const pokemon = await Pokemons.findByPk(id)
+
+    if (!pokemon) {
+      throw new AppError('Pokémon does not exist!')
+    }
+
+    const { name } = await pokemon.update({ active: false })
+
+    return res.json({ msg: `The Pokémon ${name} successfully deleted!` })
+  }
 }
 
 export default new PokemonsController()
