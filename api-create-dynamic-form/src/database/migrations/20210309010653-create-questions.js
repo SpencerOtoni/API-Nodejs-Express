@@ -11,7 +11,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            mandatory: {
+            mandatory_field: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false,

@@ -88,7 +88,7 @@ class FormController {
                 {
                     model: Question,
                     as: 'question',
-                    attributes: ['id', 'question'],
+                    attributes: ['id', 'question', 'mandatory_field'],
                 },
             ],
         })
