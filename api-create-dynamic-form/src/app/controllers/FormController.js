@@ -63,7 +63,7 @@ class FormController {
                 {
                     model: Form,
                     as: 'form',
-                    attributes: ['id', 'title', 'createdAt'],
+                    attributes: ['id', 'title', 'createdAt', 'token'],
                 },
             ],
         })
@@ -83,7 +83,7 @@ class FormController {
         const { id } = req.params
 
         const questionForm = await Form.findByPk(id, {
-            attributes: ['id', 'user_id', 'title'],
+            attributes: ['id', 'user_id', 'title', 'token'],
             include: [
                 {
                     model: Question,
