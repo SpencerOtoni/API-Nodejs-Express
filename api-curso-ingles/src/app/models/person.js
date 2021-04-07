@@ -6,8 +6,14 @@ module.exports = (sequelize, DataTypes) => {
             email: DataTypes.STRING,
             role: DataTypes.STRING,
             active: DataTypes.BOOLEAN,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
+            created_at: {
+                type: DataTypes.DATE,
+                defaultValue: sequelize.literal('NOW()'),
+            },
+            updated_at: {
+                type: DataTypes.DATE,
+                defaultValue: sequelize.literal('NOW()'),
+            },
         },
         {
             freezeTableName: true,
