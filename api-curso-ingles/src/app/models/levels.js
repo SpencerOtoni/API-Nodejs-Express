@@ -1,6 +1,6 @@
-const { Model } = require('sequelize')
+import { Model } from 'sequelize'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     class levels extends Model {
         /**
          * Helper method for defining associations.
@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            this.hasMany(models.classes, {
+                foreignKey: 'nivel_id',
+                as: 'nivel',
+            })
         }
     }
     levels.init(

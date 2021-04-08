@@ -1,6 +1,6 @@
-const { Model } = require('sequelize')
+import { Model } from 'sequelize'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     class classes extends Model {
         /**
          * Helper method for defining associations.
@@ -8,7 +8,18 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            this.belongsTo(models.person, {
+                foreignKey: 'docente_id',
+                as: 'docente',
+            })
+            this.belongsTo(models.levels, {
+                foreignKey: 'nivel_id',
+                as: 'nivel',
+            })
+            this.hasMany(models.enrollment, {
+                foreignKey: 'turma_id',
+                as: 'turma',
+            })
         }
     }
     classes.init(
