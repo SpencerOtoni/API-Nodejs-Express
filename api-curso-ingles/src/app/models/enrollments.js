@@ -1,31 +1,26 @@
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-    class enrollment extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
+    class Enrollments extends Model {
         static associate(models) {
-            this.belongsTo(models.person, {
+            this.belongsTo(models.People, {
                 foreignKey: 'estudante_id',
                 as: 'estudante',
             })
-            this.belongsTo(models.classes, {
+            this.belongsTo(models.Classes, {
                 foreignKey: 'turma_id',
                 as: 'turma',
             })
         }
     }
-    enrollment.init(
+    Enrollments.init(
         {
             status: DataTypes.STRING,
         },
         {
             sequelize,
-            modelName: 'enrollment',
+            modelName: 'Enrollments',
         }
     )
-    return enrollment
+    return Enrollments
 }

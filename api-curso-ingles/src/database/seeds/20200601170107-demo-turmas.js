@@ -1,32 +1,32 @@
 module.exports = {
     up: (queryInterface, Sequelize) =>
         queryInterface.bulkInsert(
-            'Turmas',
+            'Classes',
             [
                 {
                     data_inicio: '2020-02-01',
-                    nivel_id: 1,
+                    niveis_id: 1,
                     docente_id: 6,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     data_inicio: '2020-02-01',
-                    nivel_id: 2,
+                    niveis_id: 2,
                     docente_id: 5,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     data_inicio: '2020-02-01',
-                    nivel_id: 3,
+                    niveis_id: 3,
                     docente_id: 6,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     data_inicio: '2020-07-01',
-                    nivel_id: 3,
+                    niveis_id: 3,
                     docente_id: 6,
                     createdAt: new Date(),
                     updatedAt: new Date(),
@@ -36,5 +36,5 @@ module.exports = {
         ),
 
     down: (queryInterface, Sequelize) =>
-        queryInterface.bulkDelete('Turmas', null, {}),
+        queryInterface.bulkDelete('classes', null, {}),
 }

@@ -1,24 +1,19 @@
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-    class person extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
+    class People extends Model {
         static associate(models) {
-            this.hasMany(models.classes, {
+            this.hasMany(models.Classes, {
                 foreignKey: 'docente_id',
                 as: 'docente',
             })
-            this.hasMany(models.enrollments, {
+            this.hasMany(models.Enrollments, {
                 foreignKey: 'estudante_id',
                 as: 'estudante',
             })
         }
     }
-    person.init(
+    People.init(
         {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
@@ -27,8 +22,8 @@ export default (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: 'person',
+            modelName: 'People',
         }
     )
-    return person
+    return People
 }

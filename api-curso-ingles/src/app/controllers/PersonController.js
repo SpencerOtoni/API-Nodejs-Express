@@ -4,7 +4,20 @@ import AppError from '../errors/AppError'
 class PersonController {
     async show(req, res) {
         try {
-            const person = await database.Person.findAll()
+            const person = await database.People.findAll({
+                include: [
+                    {
+                        model: database.Classes,
+                        as: 'docente',
+                        attributes: ['id'],
+                    },
+                    {
+                        model: database.Enrollments,
+                        as: 'estudante',
+                        attributes: ['id'],
+                    },
+                ],
+            })
 
             return res.json(person)
         } catch (error) {
@@ -14,7 +27,7 @@ class PersonController {
 
     async index(req, res) {
         const { id } = req.params
-        const person = await database.Person.findOne({
+        const person = await database.People.findOne({
             where: { id },
         })
 
@@ -26,7 +39,7 @@ class PersonController {
     }
 
     async store(req, res) {
-        const person = await database.Person.create(req.body)
+        const person = await database.People.create(req.body)
 
         return res.status(201).json(person)
     }
@@ -34,7 +47,7 @@ class PersonController {
     async update(req, res) {
         const { id } = req.params
 
-        const personExist = await database.Person.findOne({
+        const personExist = await database.People.findOne({
             where: { id },
         })
 
@@ -50,7 +63,7 @@ class PersonController {
     async delete(req, res) {
         const { id } = req.params
 
-        const personExist = await database.Person.findOne({
+        const personExist = await database.People.findOne({
             where: { id },
         })
 

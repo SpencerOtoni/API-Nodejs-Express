@@ -1,6 +1,6 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('enrollments', {
+        await queryInterface.createTable('Enrollments', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -13,24 +13,26 @@ module.exports = {
             estudante_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
-                references: { model: 'person', key: 'id' },
+                references: { model: 'People', key: 'id' },
             },
             turma_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
-                references: { model: 'classes', key: 'id' },
+                references: { model: 'Classes', key: 'id' },
             },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
+                defaultValue: new Date(),
             },
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
+                defaultValue: new Date(),
             },
         })
     },
-    down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('enrollments')
+    down: async (queryInterface) => {
+        await queryInterface.dropTable('Enrollments')
     },
 }

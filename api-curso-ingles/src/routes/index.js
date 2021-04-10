@@ -1,5 +1,7 @@
-import person from './person'
+import people from './people'
+import enrollments from './enrollments'
 
 export default (app) => {
-    app.use(person)
+    app.use(people)
+    app.use(enrollments)
 }

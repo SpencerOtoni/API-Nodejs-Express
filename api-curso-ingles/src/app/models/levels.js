@@ -1,27 +1,22 @@
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-    class levels extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
+    class Levels extends Model {
         static associate(models) {
-            this.hasMany(models.classes, {
+            this.hasMany(models.Classes, {
                 foreignKey: 'nivel_id',
                 as: 'nivel',
             })
         }
     }
-    levels.init(
+    Levels.init(
         {
             descr_level: DataTypes.STRING,
         },
         {
             sequelize,
-            modelName: 'levels',
+            modelName: 'Levels',
         }
     )
-    return levels
+    return Levels
 }

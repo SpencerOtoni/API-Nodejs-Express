@@ -1,7 +1,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) =>
         queryInterface.bulkInsert(
-            'enrollment',
+            'Enrollments',
             [
                 {
                     status: 'confirmado',
@@ -50,5 +50,5 @@ module.exports = {
         ),
 
     down: (queryInterface, Sequelize) =>
-        queryInterface.bulkDelete('enrollment', null, {}),
+        queryInterface.bulkDelete('Enrollments', null, {}),
 }

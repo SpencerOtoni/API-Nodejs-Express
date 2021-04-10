@@ -1,51 +1,51 @@
 module.exports = {
     up: (queryInterface, Sequelize) =>
         queryInterface.bulkInsert(
-            'person',
+            'People',
             [
                 {
-                    nome: 'Ana Souza',
-                    ativo: true,
+                    name: 'Ana Souza',
+                    active: true,
                     email: 'ana@ana.com',
                     role: 'estudante',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    nome: 'Marcos Cintra',
-                    ativo: true,
+                    name: 'Marcos Cintra',
+                    active: true,
                     email: 'marcos@marcos.com',
                     role: 'estudante',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    nome: 'Felipe Cardoso',
-                    ativo: true,
+                    name: 'Felipe Cardoso',
+                    active: true,
                     email: 'felipe@felipe.com',
                     role: 'estudante',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    nome: 'Sandra Gomes',
-                    ativo: false,
+                    name: 'Sandra Gomes',
+                    active: false,
                     email: 'sandra@sandra.com',
                     role: 'estudante',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    nome: 'Paula Morais',
-                    ativo: true,
+                    name: 'Paula Morais',
+                    active: true,
                     email: 'paula@paula.com',
                     role: 'docente',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    nome: 'Sergio Lopes',
-                    ativo: true,
+                    name: 'Sergio Lopes',
+                    active: true,
                     email: 'sergio@sergio.com',
                     role: 'docente',
                     createdAt: new Date(),
@@ -56,5 +56,5 @@ module.exports = {
         ),
 
     down: (queryInterface, Sequelize) =>
-        queryInterface.bulkDelete('person', null, {}),
+        queryInterface.bulkDelete('People', null, {}),
 }
