@@ -60,6 +60,10 @@ class AnswerController {
             ],
         })
 
+        if (!questionForm) {
+            throw new AppError('Forms does not exist')
+        }
+
         if (questionForm.user_id !== req.userId) {
             throw new AppError(
                 'You do not have permission to access this form.',

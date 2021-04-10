@@ -13,7 +13,7 @@ module.exports = {
             },
             token: {
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('uuid_generate_v4()'),
+                defaultValue: Sequelize.UUIDV4,
                 allowNull: false,
             },
             user_id: {

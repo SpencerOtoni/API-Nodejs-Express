@@ -5,7 +5,7 @@ class Question extends Model {
         super.init(
             {
                 question: Sequelize.STRING,
-                mandatory: Sequelize.BOOLEAN,
+                mandatory_field: Sequelize.BOOLEAN,
             },
             {
                 sequelize,
@@ -18,11 +18,11 @@ class Question extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Form, { foreignKey: 'form_id', as: 'form' }),
-            this.hasMany(models.Answer, {
-                foreignKey: 'question_id',
-                as: 'answer',
-            })
+        this.belongsTo(models.Form, { foreignKey: 'form_id', as: 'form' })
+        this.hasMany(models.Answer, {
+            foreignKey: 'question_id',
+            as: 'answer',
+        })
     }
 }
 

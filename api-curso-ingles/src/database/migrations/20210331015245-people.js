@@ -1,40 +1,44 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('questions', {
+        await queryInterface.createTable('People', {
             id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
             },
-            question: {
+            name: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            mandatory_field: {
+            email: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: true,
+            },
+            role: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
+            active: {
                 type: Sequelize.BOOLEAN,
-                defaultValue: false,
+                defaultValue: true,
                 allowNull: false,
             },
-            form_id: {
-                type: Sequelize.INTEGER,
-                references: { model: 'form', key: 'id' },
-                onUpdate: 'CASCADE',
-                OnDelete: 'CASCADE',
-                allowNull: false,
-            },
-            created_at: {
+            createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,
+                defaultValue: new Date(),
             },
-            updated_at: {
+            updatedAt: {
                 type: Sequelize.DATE,
                 allowNull: false,
+                defaultValue: new Date(),
             },
         })
     },
 
     down: async (queryInterface) => {
-        await queryInterface.dropTable('questions')
+        await queryInterface.dropTable('People')
     },
 }

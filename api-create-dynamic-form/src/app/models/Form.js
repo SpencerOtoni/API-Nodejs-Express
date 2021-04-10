@@ -1,5 +1,5 @@
 import Sequelize, { Model } from 'sequelize'
-import bcrypt from 'bcryptjs'
+import { v4 as uuidv4 } from 'uuid'
 
 class Form extends Model {
     static init(sequelize) {
@@ -15,19 +15,19 @@ class Form extends Model {
             }
         )
 
-        /* this.addHook('beforeSave', async (form) => {
-            form.token = await bcrypt.hash(Math.round(Date.now() / 1000), 8)
+        this.addHook('beforeSave', async (form) => {
+            form.token = uuidv4()
         })
- */
+
         return this
     }
 
     static associate(models) {
-        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' }),
-            this.hasMany(models.Question, {
-                foreignKey: 'form_id',
-                as: 'question',
-            })
+        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
+        this.hasMany(models.Question, {
+            foreignKey: 'form_id',
+            as: 'question',
+        })
     }
 }
 
