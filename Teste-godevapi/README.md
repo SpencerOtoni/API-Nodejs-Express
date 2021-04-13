@@ -78,9 +78,8 @@ A API possui controle de sessão através de um token JWT, na qual possibilita a
 | POST   | /connector     | Cadastra um conector                                                                     | name, category, description, type, privacy e file(imagem) | Antes de cadastrar o conector verifica se o conector informado já foi cadastrado, levando em consideração os campos name , type , privacy |
 | GET    | /connector     | Traz os conectores levando em consideração os campos os name , type , privacy , category |                                                           | Busca todos os conectores através dos filtros (name , type , privacy , category) passados pelos query params.                             |
 | GET    | /connector/:id | Traz um único conector                                                                   |                                                           | Busca os dados de um conector pelo seu id.                                                                                                |
-
-| PUT | /connector/:id | Atualiza os dados de um conector| | Verifica se o conector informado já foi cadastrado, levando em consideração os campos name , type , privacy antes de atualizar os dados. |
-| DELETE | /connector/:id | Altera o estado do conector para ativo ou inativo| | Verifica se o conector existe e altera o seu estado. |
+| PUT    | /connector/:id | Atualiza os dados de um conector                                                         |                                                           | Verifica se o conector informado já foi cadastrado, levando em consideração os campos name , type , privacy antes de atualizar os dados.  |
+| DELETE | /connector/:id | Altera o estado do conector para ativo ou inativo                                        |                                                           | Verifica se o conector existe e altera o seu estado.                                                                                      |
 
 ##: Entre em contato!
 
