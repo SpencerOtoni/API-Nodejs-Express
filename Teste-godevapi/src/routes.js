@@ -2,6 +2,8 @@ import { Router } from 'express'
 import multer from 'multer'
 import multerConfig from './config/multer'
 
+import PopularConnectorController from './app/controllers/PopularConnectorController'
+
 import UserController from './app/controllers/UserController'
 import SessionController from './app/controllers/SessionController'
 import ConnectorController from './app/controllers/ConnectorController'
@@ -10,6 +12,8 @@ import authMiddleware from './app/middlewares/auth'
 
 const routes = new Router()
 const upload = multer(multerConfig)
+
+routes.get('/popular', PopularConnectorController.store)
 
 routes.post('/user', UserController.store)
 routes.put('/user', UserController.update)
