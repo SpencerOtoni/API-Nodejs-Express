@@ -59,7 +59,7 @@ class ConnectorController {
             category,
             type,
             privacy,
-            imagem: `${base_URL}/connector/${logo_URL}`,
+            imagem: `${base_URL}${process.env.PORT}/connector/${logo_URL}`,
         })
     }
 
@@ -128,6 +128,16 @@ class ConnectorController {
         return res.json({
             name,
         })
+    }
+
+    async getConnectors(req, res) {
+        const connectors = await Connector.find()
+
+        if (connectors.length === 0) {
+            throw new AppError('There are no registered connectors.')
+        }
+
+        return res.json(connectors)
     }
 }
 

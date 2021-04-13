@@ -18,6 +18,8 @@ routes.post('/session', SessionController.store)
 
 routes.use(authMiddleware)
 
+routes.get('/connectors', ConnectorController.getConnectors)
+
 routes.post('/connector', upload.single('file'), ConnectorController.store)
 routes.get('/connector', ConnectorController.index)
 routes.get('/connector/:id', ConnectorController.show)
