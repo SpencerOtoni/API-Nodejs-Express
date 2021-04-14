@@ -35,7 +35,7 @@ class PersonController {
             throw new AppError('Person does not exist')
         }
 
-        return res.send(person)
+        return res.json(person)
     }
 
     async store(req, res) {
@@ -71,7 +71,7 @@ class PersonController {
             throw new AppError('Person does not exist.')
         }
 
-        const { name } = await personExist.destroy(req.body)
+        const { name } = await personExist.destroy()
 
         return res.json({ name })
     }

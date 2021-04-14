@@ -3,12 +3,12 @@ import AppError from '../errors/AppError'
 
 class EnrollmentController {
     async index(req, res) {
-        const { estudanteID, matriculaID } = req.params
+        const { estudanteId, matriculaId } = req.params
 
         const estudanteAndMatricula = await database.Enrollments.findOne({
             where: {
-                estudante_id: estudanteID,
-                turma_id: matriculaID,
+                estudante_id: estudanteId,
+                id: matriculaId,
             },
         })
 
@@ -16,16 +16,16 @@ class EnrollmentController {
             throw new AppError('Student does not exist')
         }
 
-        return res.send(estudanteAndMatricula)
+        return res.json(estudanteAndMatricula)
     }
 
     async store(req, res) {
-        const { estudanteID } = req.params
+        const { estudanteId } = req.params
         const { turma_id } = req.body
 
         const estudanteAndMatricula = await database.Enrollments.findOne({
             where: {
-                estudante_id: estudanteID,
+                estudante_id: estudanteId,
                 turma_id,
             },
         })
@@ -34,13 +34,48 @@ class EnrollmentController {
             throw new AppError('Student já matriculado.')
         }
 
-        const novaMatricula = { ...req.body, estudante_id: estudanteID }
+        const novaMatricula = { ...req.body, estudante_id: estudanteId }
 
         const novaMatriculaEstudante = await database.Enrollments.create(
             novaMatricula
         )
 
-        return res.status(201).send(novaMatriculaEstudante)
+        return res.status(201).json(novaMatriculaEstudante)
+    }
+
+    async update(req, res) {
+        const { estudanteId, matriculaId } = req.params
+
+        const estudanteAndMatricula = await database.Enrollments.findOne({
+            where: {
+                estudante_id: estudanteId,
+                id: matriculaId,
+            },
+        })
+
+        if (!estudanteAndMatricula) {
+            throw new AppError('Student does not exist')
+        }
+
+        const matriculaAtualizada = await estudanteAndMatricula.update(req.body)
+
+        return res.json(matriculaAtualizada)
+    }
+
+    async delete(req, res) {
+        const { matriculaId } = req.params
+
+        const matriculaExist = await database.Enrollments.findOne({
+            where: { id: matriculaId },
+        })
+
+        if (!matriculaExist) {
+            throw new AppError('Matricula does not exist.')
+        }
+
+        const { name } = await matriculaExist.destroy()
+
+        return res.json({ name })
     }
 }
 
