@@ -1,4 +1,4 @@
-import people from './people'
+import people from './person'
 import enrollments from './enrollments'
 
 export default (app) => {
