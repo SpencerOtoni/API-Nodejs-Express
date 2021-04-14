@@ -65,6 +65,7 @@ A API possui controle de sessão através de um token JWT, na qual possibilita a
 
 | Método | Rota     | Função                       | Campos obrigatórios                                                                   | Descrição                                                                                      |
 | ------ | -------- | ---------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| GET   | /popular    | Popula o banco de dados com dados fictícios          |  | Esta rota de acessa antes para popular o banco para teste de consulta.  |
 | POST   | /user    | Cadastra um usuário          | name, email e password                                                                | Antes de cadastrar um usuário é verificado se o email informado já foi cadastrado.            |
 | PUT    | /user    | Atualiza os dados do usuário | Se existir oldPassword os campos password e confirPassword passam a ser obrigatórios. | Verifica se a senha confere com a salva no banco e se o email informado já não foi cadastrado. |
 | POST   | /session | Faz login na aplicação       | email e password                                                                      | Verifica se usuário existe e se a senha confere com a salva no banco.                          |
