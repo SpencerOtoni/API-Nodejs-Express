@@ -16,6 +16,7 @@ export default (sequelize, DataTypes) => {
     Enrollments.init(
         {
             status: DataTypes.STRING,
+            active: DataTypes.BOOLEAN,
         },
         {
             sequelize,

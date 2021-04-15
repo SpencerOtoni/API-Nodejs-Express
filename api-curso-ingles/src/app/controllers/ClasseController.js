@@ -1,16 +1,9 @@
+import { where } from 'sequelize/types'
 import database from '../models'
 import AppError from '../errors/AppError'
 
 class ClasseController {
     async store(req, res) {
-        const { name } = req.body
-
-        const classe = await database.Classes.findOne({ where: { name } })
-
-        if (!classe) {
-            throw new AppError('Classe already registered!.', 401)
-        }
-
         const resultClasse = await database.Classes.create(req.body)
 
         return res.status(201).json({
@@ -22,14 +15,16 @@ class ClasseController {
         const { id } = req.params
 
         const classe = await database.Classes.findOne({
-            where: { id, active: false },
+            where: { id },
         })
 
         if (!classe) {
             throw new AppError('Classe not found.')
         }
 
-        return res.json(classe)
+        console.log(classe)
+
+        return res.json({ classe })
     }
 
     async index(req, res) {
@@ -47,7 +42,7 @@ class ClasseController {
     async update(req, res) {
         const { id } = req.params
 
-        const classe = await Types.findByPk(id)
+        const classe = await database.Classes.findByPk(id)
 
         if (!classe) {
             throw new AppError('Classe not found.')
@@ -55,13 +50,13 @@ class ClasseController {
 
         const { name } = classe
 
-        const existType = await Types.findOne({ where: { name } })
+        const existType = await database.Classes.findOne({ where: { name } })
 
         if (!existType) {
             throw new AppError('Type already registered!.', 401)
         }
 
-        const newType = await type.update(req.body)
+        const newType = await database.Classes.update(req.body)
 
         return res.json(newType)
     }
@@ -69,17 +64,20 @@ class ClasseController {
     async delete(req, res) {
         const { id } = req.params
 
-        const classe = await Types.findByPk(id)
+        const classe = await database.Classes.findByPk(id)
 
         if (!classe) {
             throw new AppError('Classe not found.')
         }
 
-        const { name } = await type.update({
-            active: false,
-        })
+        await database.Classes.update(
+            {
+                active: false,
+            },
+            { where: { id } }
+        )
 
-        return res.json(newType)
+        return res.json({ id })
     }
 }
 

@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
                 as: 'docente',
             })
             this.belongsTo(models.Levels, {
-                foreignKey: 'nivel_id',
+                foreignKey: 'niveis_id',
                 as: 'nivel',
             })
             this.hasMany(models.Enrollments, {
@@ -20,6 +20,7 @@ export default (sequelize, DataTypes) => {
     Classes.init(
         {
             data_inicio: DataTypes.DATEONLY,
+            active: DataTypes.BOOLEAN,
         },
         {
             sequelize,

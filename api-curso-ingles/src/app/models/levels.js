@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
     class Levels extends Model {
         static associate(models) {
             this.hasMany(models.Classes, {
-                foreignKey: 'nivel_id',
+                foreignKey: 'niveis_id',
                 as: 'nivel',
             })
         }
@@ -12,6 +12,7 @@ export default (sequelize, DataTypes) => {
     Levels.init(
         {
             descr_level: DataTypes.STRING,
+            active: DataTypes.BOOLEAN,
         },
         {
             sequelize,
