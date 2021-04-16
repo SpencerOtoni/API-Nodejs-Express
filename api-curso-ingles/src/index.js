@@ -13,7 +13,7 @@ routes(app)
 
 app.use((err, req, res, next) => {
     if (err instanceof AppError) {
-        return res.status(err.status).json({
+        return res.status(err.statusCode).json({
             message: err.message,
         })
     }

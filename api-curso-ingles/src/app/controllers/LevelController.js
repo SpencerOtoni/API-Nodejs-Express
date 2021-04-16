@@ -10,6 +10,18 @@ class LevelController {
         })
     }
 
+    async getAll(req, res) {
+        const classes = await database.Levels.scope('getAll').findAll()
+
+        if (classes.length === 0) {
+            throw new AppError('There are no classes forms.')
+        }
+
+        return res.json({
+            classes,
+        })
+    }
+
     async show(req, res) {
         const { id } = req.params
 

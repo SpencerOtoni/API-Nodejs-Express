@@ -4,7 +4,7 @@ import AppError from '../errors/AppError'
 class PersonController {
     async index(req, res) {
         try {
-            const person = await database.People.findAll({
+            const person = await database.People.findAll(/* {
                 include: [
                     {
                         model: database.Classes,
@@ -17,7 +17,7 @@ class PersonController {
                         attributes: ['id'],
                     },
                 ],
-            })
+            } */)
 
             return res.json(person)
         } catch (error) {
