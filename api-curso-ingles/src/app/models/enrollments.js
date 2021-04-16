@@ -19,6 +19,11 @@ export default (sequelize, DataTypes) => {
             active: DataTypes.BOOLEAN,
         },
         {
+            /* defaultScope: {
+                where: {
+                    active: true,
+                },
+            }, */
             sequelize,
             modelName: 'Enrollments',
         }

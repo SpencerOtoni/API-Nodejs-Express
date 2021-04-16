@@ -1,4 +1,3 @@
-import { where } from 'sequelize/types'
 import database from '../models'
 import AppError from '../errors/AppError'
 
@@ -8,6 +7,18 @@ class ClasseController {
 
         return res.status(201).json({
             resultClasse,
+        })
+    }
+
+    async getAll(req, res) {
+        const classes = await database.Classes.scope('getAll').findAll()
+
+        if (classes.length === 0) {
+            throw new AppError('There are no classes forms.')
+        }
+
+        return res.json({
+            classes,
         })
     }
 
@@ -21,8 +32,6 @@ class ClasseController {
         if (!classe) {
             throw new AppError('Classe not found.')
         }
-
-        console.log(classe)
 
         return res.json({ classe })
     }
@@ -48,15 +57,9 @@ class ClasseController {
             throw new AppError('Classe not found.')
         }
 
-        const { name } = classe
-
-        const existType = await database.Classes.findOne({ where: { name } })
-
-        if (!existType) {
-            throw new AppError('Type already registered!.', 401)
-        }
-
-        const newType = await database.Classes.update(req.body)
+        const newType = await database.Classes.update(req.body, {
+            where: { id },
+        })
 
         return res.json(newType)
     }

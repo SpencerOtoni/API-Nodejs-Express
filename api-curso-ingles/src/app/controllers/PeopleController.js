@@ -2,7 +2,7 @@ import database from '../models'
 import AppError from '../errors/AppError'
 
 class PersonController {
-    async show(req, res) {
+    async index(req, res) {
         try {
             const person = await database.People.findAll({
                 include: [
@@ -25,7 +25,7 @@ class PersonController {
         }
     }
 
-    async index(req, res) {
+    async show(req, res) {
         const { id } = req.params
         const person = await database.People.findOne({
             where: { id },

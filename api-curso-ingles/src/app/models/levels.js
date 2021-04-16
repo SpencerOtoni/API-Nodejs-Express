@@ -15,6 +15,16 @@ export default (sequelize, DataTypes) => {
             active: DataTypes.BOOLEAN,
         },
         {
+            defaultScope: {
+                where: {
+                    active: true,
+                },
+                scopes: {
+                    getAll: {
+                        where: {},
+                    },
+                },
+            },
             sequelize,
             modelName: 'Levels',
         }
