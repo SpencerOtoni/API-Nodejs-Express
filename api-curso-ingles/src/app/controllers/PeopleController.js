@@ -4,20 +4,15 @@ import AppError from '../errors/AppError'
 class PersonController {
     async index(req, res) {
         try {
-            const person = await database.People.findAll(/* {
+            const person = await database.People.findAll({
                 include: [
                     {
-                        model: database.Classes,
-                        as: 'docente',
-                        attributes: ['id'],
-                    },
-                    {
                         model: database.Enrollments,
-                        as: 'estudante',
-                        attributes: ['id'],
+                        as: 'Matriculas',
+                        attributes: ['id', 'status'],
                     },
                 ],
-            } */)
+            })
 
             return res.json(person)
         } catch (error) {
@@ -29,6 +24,13 @@ class PersonController {
         const { id } = req.params
         const person = await database.People.findOne({
             where: { id },
+            include: [
+                {
+                    model: database.Enrollments,
+                    as: 'Matriculas',
+                    attributes: ['id', 'status'],
+                },
+            ],
         })
 
         if (!person) {

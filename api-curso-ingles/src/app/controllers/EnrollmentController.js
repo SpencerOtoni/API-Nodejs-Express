@@ -1,3 +1,5 @@
+import { literal } from 'sequelize'
+
 import database from '../models'
 import AppError from '../errors/AppError'
 
@@ -11,6 +13,47 @@ class EnrollmentController {
                 id: matriculaId,
             },
         })
+
+        if (!estudanteAndMatricula) {
+            throw new AppError('Student does not exist')
+        }
+
+        return res.json(estudanteAndMatricula)
+    }
+
+    async getMatriculaPorTurma(req, res) {
+        const { matriculaId } = req.params
+
+        const estudanteAndMatricula = await database.Enrollments.findAndCountAll(
+            {
+                where: {
+                    turma_id: matriculaId,
+                    status: 'confirmado',
+                },
+                limit: 20,
+                order: [['estudante_id', 'DESC']],
+            }
+        )
+
+        if (!estudanteAndMatricula) {
+            throw new AppError('Student does not exist')
+        }
+
+        return res.json(estudanteAndMatricula)
+    }
+
+    async getTurmaLotadas(req, res) {
+        const lotacaoTurma = 2
+        const estudanteAndMatricula = await database.Enrollments.findAndCountAll(
+            {
+                where: {
+                    status: 'confirmado',
+                },
+                attributes: ['turma_id'],
+                group: ['turma_id'],
+                having: literal(`count(turma_id) >= ${lotacaoTurma}`),
+            }
+        )
 
         if (!estudanteAndMatricula) {
             throw new AppError('Student does not exist')

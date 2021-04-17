@@ -5,11 +5,12 @@ export default (sequelize, DataTypes) => {
         static associate(models) {
             this.hasMany(models.Classes, {
                 foreignKey: 'docente_id',
-                as: 'docente',
+                as: 'Turmas',
             })
             this.hasMany(models.Enrollments, {
                 foreignKey: 'estudante_id',
-                as: 'estudante',
+                as: 'Matriculas',
+                scope: { status: 'confirmado' },
             })
         }
     }

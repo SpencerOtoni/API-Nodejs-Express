@@ -1,3 +1,5 @@
+import { Op } from 'sequelize'
+
 import database from '../models'
 import AppError from '../errors/AppError'
 
@@ -37,7 +39,16 @@ class ClasseController {
     }
 
     async index(req, res) {
-        const classes = await database.Classes.findAll()
+        const { data_inicial, data_final } = req.query
+
+        const where = {}
+        data_inicial || data_final ? (where.data_inicio = {}) : null
+        data_inicial ? (where.data_inicio[Op.gte] = data_inicial) : null
+        data_final ? (where.data_inicio[Op.lte] = data_final) : null
+
+        const classes = await database.Classes.findAll({
+            where,
+        })
 
         if (classes.length === 0) {
             throw new AppError('There are no classes forms.')

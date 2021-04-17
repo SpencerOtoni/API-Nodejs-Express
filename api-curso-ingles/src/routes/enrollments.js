@@ -8,6 +8,11 @@ routes.get(
     '/pessoas/:estudanteId/matricula/:matriculaId',
     EnrollmentControllere.index
 )
+routes.get(
+    '/pessoas/matricula/:matriculaId/confirmado',
+    EnrollmentControllere.getMatriculaPorTurma
+)
+routes.get('/pessoas/matricula/lotacao', EnrollmentControllere.getTurmaLotadas)
 routes.post('/pessoas/:estudanteID/matricula', EnrollmentControllere.store)
 routes.put(
     '/pessoas/:estudanteId/matricula/:matriculaId',
