@@ -1,19 +1,32 @@
 import { Op } from 'sequelize'
 
-import database from '../models'
+import { ClassServices } from '../services'
+
 import AppError from '../errors/AppError'
 
+const ClasseServices = new ClassServices()
 class ClasseController {
-    async store(req, res) {
-        const resultClasse = await database.Classes.create(req.body)
+    async index(req, res) {
+        const { data_inicial, data_final } = req.query
 
-        return res.status(201).json({
-            resultClasse,
+        const where = {}
+        data_inicial || data_final ? (where.data_inicio = {}) : null
+        data_inicial ? (where.data_inicio[Op.gte] = data_inicial) : null
+        data_final ? (where.data_inicio[Op.lte] = data_final) : null
+
+        const classes = await ClasseServices.getRegistrosAtivos(where)
+
+        if (classes.length === 0) {
+            throw new AppError('There are no classes forms.')
+        }
+
+        return res.json({
+            classes,
         })
     }
 
     async getAll(req, res) {
-        const classes = await database.Classes.scope('getAll').findAll()
+        const classes = await ClasseServices.getRegistrosAtivos()
 
         if (classes.length === 0) {
             throw new AppError('There are no classes forms.')
@@ -27,9 +40,7 @@ class ClasseController {
     async show(req, res) {
         const { id } = req.params
 
-        const classe = await database.Classes.findOne({
-            where: { id },
-        })
+        const classe = await ClasseServices.getOneRegistro(id)
 
         if (!classe) {
             throw new AppError('Classe not found.')
@@ -38,39 +49,24 @@ class ClasseController {
         return res.json({ classe })
     }
 
-    async index(req, res) {
-        const { data_inicial, data_final } = req.query
+    async store(req, res) {
+        const resultClasse = await ClasseServices.createRegistro(req.body)
 
-        const where = {}
-        data_inicial || data_final ? (where.data_inicio = {}) : null
-        data_inicial ? (where.data_inicio[Op.gte] = data_inicial) : null
-        data_final ? (where.data_inicio[Op.lte] = data_final) : null
-
-        const classes = await database.Classes.findAll({
-            where,
-        })
-
-        if (classes.length === 0) {
-            throw new AppError('There are no classes forms.')
-        }
-
-        return res.json({
-            classes,
+        return res.status(201).json({
+            resultClasse,
         })
     }
 
     async update(req, res) {
         const { id } = req.params
 
-        const classe = await database.Classes.findByPk(id)
+        const classe = await ClasseServices.getOneRegistro(id)
 
         if (!classe) {
             throw new AppError('Classe not found.')
         }
 
-        const newType = await database.Classes.update(req.body, {
-            where: { id },
-        })
+        const newType = await ClasseServices.updateRegistro(req.body, id)
 
         return res.json(newType)
     }
@@ -78,18 +74,13 @@ class ClasseController {
     async delete(req, res) {
         const { id } = req.params
 
-        const classe = await database.Classes.findByPk(id)
+        const classe = await ClasseServices.getOneRegistro(id)
 
         if (!classe) {
             throw new AppError('Classe not found.')
         }
 
-        await database.Classes.update(
-            {
-                active: false,
-            },
-            { where: { id } }
-        )
+        await ClasseServices.deleteRegistro(id)
 
         return res.json({ id })
     }

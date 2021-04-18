@@ -1,19 +1,11 @@
-import database from '../models'
+import { PeopleServices } from '../services'
 import AppError from '../errors/AppError'
 
+const peopleService = new PeopleServices()
 class PersonController {
     async index(req, res) {
         try {
-            const person = await database.People.findAll({
-                include: [
-                    {
-                        model: database.Enrollments,
-                        as: 'Matriculas',
-                        attributes: ['id', 'status'],
-                    },
-                ],
-            })
-
+            const person = await peopleService.getRegistros()
             return res.json(person)
         } catch (error) {
             throw new AppError(error)
@@ -22,16 +14,7 @@ class PersonController {
 
     async show(req, res) {
         const { id } = req.params
-        const person = await database.People.findOne({
-            where: { id },
-            include: [
-                {
-                    model: database.Enrollments,
-                    as: 'Matriculas',
-                    attributes: ['id', 'status'],
-                },
-            ],
-        })
+        const person = await peopleService.getOneRegistro(id)
 
         if (!person) {
             throw new AppError('Person does not exist')
@@ -41,8 +24,8 @@ class PersonController {
     }
 
     async store(req, res) {
-        const person = await database.People.create(req.body)
-
+        const person = await peopleService.createRegistro(req.body)
+        console.log(person)
         return res.status(201).json(person)
     }
 

@@ -86,6 +86,58 @@ class EnrollmentController {
         return res.status(201).json(novaMatriculaEstudante)
     }
 
+    async cancelaPessoa(req, res) {
+        const { estudanteId } = req.params
+
+        const estudante = await database.People.findOne({
+            where: {
+                id: estudanteId,
+            },
+        })
+
+        if (!estudante) {
+            throw new AppError('Student does not exist')
+        }
+
+        const matriculaEstudante = await database.Enrollments.findOne({
+            where: {
+                estudante_id: estudanteId,
+            },
+        })
+
+        if (!matriculaEstudante) {
+            throw new AppError('Enrollment does not exist')
+        }
+
+        const { name, id } = estudante
+
+        database.sequelize.transaction(async (transacao) => {
+            await database.People.update(
+                { active: false },
+                {
+                    where: {
+                        id,
+                    },
+                },
+                { transaction: transacao }
+            )
+
+            await database.Enrollments.update(
+                { status: 'cancelado' },
+                {
+                    where: {
+                        id,
+                    },
+                },
+                { transaction: transacao }
+            )
+
+            return res.json({
+                msg: `Matrícula do estudante ${name} foram canceladas.`,
+            })
+        })
+    }
+
     async update(req, res) {
         const { estudanteId, matriculaId } = req.params
 

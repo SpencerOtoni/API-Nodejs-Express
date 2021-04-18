@@ -13,11 +13,18 @@ routes.get(
     EnrollmentControllere.getMatriculaPorTurma
 )
 routes.get('/pessoas/matricula/lotacao', EnrollmentControllere.getTurmaLotadas)
-routes.post('/pessoas/:estudanteID/matricula', EnrollmentControllere.store)
+
+routes.post('/pessoas/:estudanteId/matricula', EnrollmentControllere.store)
+routes.post(
+    '/pessoas/:estudanteId/cancelada',
+    EnrollmentControllere.cancelaPessoa
+)
+
 routes.put(
     '/pessoas/:estudanteId/matricula/:matriculaId',
     EnrollmentControllere.update
 )
+
 routes.delete(
     '/pessoas/:estudanteId/matricula/:matriculaId',
     EnrollmentControllere.delete
