@@ -11,10 +11,16 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            token_push: {
+                type: Sequelize.STRING,
+            },
             email: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: true,
+                validate: {
+                    isInt: true,
+                },
             },
             password_hash: {
                 type: Sequelize.STRING,
