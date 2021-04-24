@@ -1,5 +1,8 @@
-import express, { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
+import express, { NextFunction, Request, Response } from 'express'
+import { createServer } from 'http'
+import { Server, Socket } from 'socket.io'
+
 
 import createConnection from './database'
 
@@ -9,6 +12,13 @@ import { AppError } from './errors/AppError'
 createConnection()
 
 const app = express()
+
+const http = createServer(app)
+const io = new Server(http)
+
+io.on('connection', (socket: Socket) => {
+    console.log('Se conectou', socket.id)
+})
 
 app.use(express.json())
 app.use(routes)
@@ -28,4 +38,4 @@ app.use(
     }
 )
 
-app.listen(3333, ()=> console.log('Servidor online!'))
+http.listen(3333, ()=> console.log('Servidor online!'))
