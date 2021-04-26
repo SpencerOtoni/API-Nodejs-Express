@@ -1,11 +1,10 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn} from 'typeorm'
-import { v4 as uuid } from 'uuid'
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm'
 
 import { User } from './User'
 
 @Entity('connections')
 class Connection {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string
 
     @Column()

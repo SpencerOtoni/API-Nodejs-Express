@@ -33,6 +33,35 @@ class SettingsServices{
 
         return setting
     }
+
+    async findByUsername(username: string){
+        const settings = this.settingsRepository.findOne({
+            username
+        })
+
+        return settings
+    }
+
+    async update({ username, chat }: ISettingsCreate) {
+        await this.settingsRepository.createQueryBuilder()
+            .update(Setting)
+            .set({ chat })
+            .where("username = username", {
+                username
+            })
+            .execute()
+        /* let settings = await this.settingsRepository.findOne({ username });
+        if (!settings) {
+          throw new AppError("Setting not found",144);
+        }
+
+        settings.chat = chat;
+
+        await this.settingsRepository.save(settings);
+
+        return settings;
+        */
+    }
 }
 
 
