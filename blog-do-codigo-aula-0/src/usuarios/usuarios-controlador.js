@@ -11,7 +11,7 @@ module.exports = {
         email
       });
 
-      await usuario.adicionaSenhaHash(senha);
+      await usuario.adicionaSenha(senha);
       await usuario.adiciona();
 
       res.status(201).json();
@@ -24,6 +24,10 @@ module.exports = {
         res.status(500).json({ erro: erro.message });
       }
     }
+  },
+
+  login: async (req, res) => {
+    res.status(200).send();
   },
 
   lista: async (req, res) => {
